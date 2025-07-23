@@ -24,7 +24,7 @@ export default function HomePage() {
           className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition duration-200"
           onClick={() => fileInputRef.current?.click()}
         >
-          افزودن آیتم جدید
+          Add a new item
         </button>
 
         <input
@@ -40,7 +40,7 @@ export default function HomePage() {
             className="text-blue-600 hover:text-blue-800 font-medium transition"
             onClick={() => router.push("/csv")}
           >
-            مشاهده فایل CSV
+            View CSV File
           </button>
         </div>
       </div>

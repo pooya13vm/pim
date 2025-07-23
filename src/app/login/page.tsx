@@ -46,10 +46,10 @@ export default function LoginPage() {
         }}
       >
         <h2 style={{ textAlign: "center", marginBottom: 30 }}>
-          🔐 ورود به سیستم
+          🔐 Login to system
         </h2>
 
-        <label style={{ display: "block", marginBottom: 8 }}>نام کاربری</label>
+        <label style={{ display: "block", marginBottom: 8 }}>Username</label>
         <input
           type="text"
           placeholder="Username"
@@ -65,7 +65,7 @@ export default function LoginPage() {
           }}
         />
 
-        <label style={{ display: "block", marginBottom: 8 }}>رمز عبور</label>
+        <label style={{ display: "block", marginBottom: 8 }}>Password</label>
         <input
           type="password"
           placeholder="Password"
