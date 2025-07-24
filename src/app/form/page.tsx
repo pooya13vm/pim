@@ -85,10 +85,49 @@ export default function DynamicFormPage() {
       prev.includes(name) ? prev.filter((s) => s !== name) : [...prev, name]
     );
   };
-
+  const categoryToSubcategories: Record<string, string[]> = {
+    Jewelry: [
+      "Bracelets", "Rings", "Necklaces", "Earrings", "Pendants", "Custom Jewelry",
+      "Engraved Jewelry", "Children’s Jewelry", "Men’s Jewelry", "Women's Jewelry"
+    ],
+    Crystals: [
+      "Tumbled Stones", "Raw Specimens", "Crystal Clusters", "Polished", "Fetishes"
+    ],
+    Fossils: [
+      "Ammonites", "Orthoceras", "Trilobites", "Megalodon (Teeth / Shards)", "Fossil Jewelry"
+    ],
+    Art: [
+      "Paintings", "Pottery", "Textile Art", "Beadwork", "Sculptures"
+    ],
+    // ...add the rest accordingly
+  };
+  
+  
   const renderField = (field: Field) => {
     const commonClasses = "border rounded px-3 py-2 w-full";
 
+    if (field.name === "Subcategory") {
+      const selectedCategory = formData["Category"];
+      const options = categoryToSubcategories[selectedCategory] || [];
+      const isDisabled = !selectedCategory;
+    
+      return (
+        <select
+          className={commonClasses}
+          value={formData[field.name]}
+          onChange={(e) => handleChange(field.name, e.target.value)}
+          disabled={isDisabled}
+        >
+          <option value="">Select a subcategory...</option>
+          {options.map((opt) => (
+            <option key={opt} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
+      );
+    }
+    
     if (field.type === "select" && field.options) {
       return (
         <select
@@ -199,6 +238,10 @@ export default function DynamicFormPage() {
           </button>
         </div>
       </form>
+    </main>
+  );
+}
+
     </main>
   );
 }
