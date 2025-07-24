@@ -2,27 +2,33 @@ import { NextResponse } from "next/server";
 import { writeFile, appendFile, access } from "fs/promises";
 import path from "path";
 import { constants } from "fs";
+import schema from "../../form/full_form_schema.json"; // JSON schema
 
 const FILE_PATH = path.join(process.cwd(), "public", "items.csv");
 
-function objectToCSVRow(data: Record<string, string>): string {
-  const values = Object.values(data).map(
-    (val) => `"${val?.replace(/"/g, '""') || ""}"`
-  );
-  return values.join(",") + "\n";
-}
+// Extract keys and headers from schema
+const keys = schema.sections.flatMap((section: any) =>
+  section.fields.map((field: any) => field.name)
+);
+const headers = schema.sections.flatMap((section: any) =>
+  section.fields.map((field: any) => field.label)
+);
 
 export async function POST(req: Request) {
   try {
     const formData = await req.json();
 
-    const row = objectToCSVRow(formData);
+    // Build row in schema order
+    const row =
+      keys
+        .map((key) => `"${(formData[key] || "").replace(/"/g, '""')}"`)
+        .join(",") + "\n";
 
     try {
       await access(FILE_PATH, constants.F_OK);
     } catch {
-      const header = Object.keys(formData).join(",") + "\n";
-      await writeFile(FILE_PATH, header);
+      // If file does not exist, write headers
+      await writeFile(FILE_PATH, headers.join(",") + "\n");
     }
 
     await appendFile(FILE_PATH, row);

@@ -20,7 +20,7 @@ export default function LoginPage() {
     if (res.ok) {
       router.push("/");
     } else {
-      setError("نام کاربری یا رمز عبور اشتباه است");
+      setError("Wrong Username or Password");
     }
   };
 
@@ -97,7 +97,7 @@ export default function LoginPage() {
           onMouseEnter={(e) => (e.currentTarget.style.background = "#0059c1")}
           onMouseLeave={(e) => (e.currentTarget.style.background = "#0070f3")}
         >
-          ورود
+          Submit
         </button>
 
         {error && (
