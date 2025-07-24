@@ -155,7 +155,7 @@ export default function DynamicFormPage() {
   };
 
   return (
-    <main className="max-w-6xl mx-auto p-6">
+    <main className="max-w-6xl mx-auto p-6 bg-gray-800 ">
       <h1 className="text-2xl font-bold mb-6">Form</h1>
       <form className="space-y-6">
         {schema.sections.map((section) => {

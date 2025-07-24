@@ -16,15 +16,18 @@ export default function HomePage() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-4">
-      <div className="bg-white p-10 rounded-xl shadow-md w-full max-w-md text-center space-y-6">
-        <h1 className="text-3xl font-bold text-gray-800">📷 GemLens</h1>
+    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-900 px-4 text-white">
+      <div className="bg-gray-800 p-8 rounded-xl shadow-lg w-full max-w-md text-center space-y-6 border border-gray-700">
+        <h1 className="text-4xl font-extrabold">📷 GemLens</h1>
+        <p className="text-gray-300 text-sm">
+          Upload an image to create a new item
+        </p>
 
         <button
           className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition duration-200"
           onClick={() => fileInputRef.current?.click()}
         >
-          Add a new item
+          Add a New Item
         </button>
 
         <input
@@ -35,9 +38,9 @@ export default function HomePage() {
           onChange={handleImageUpload}
         />
 
-        <div className="pt-4 border-t border-gray-200">
+        <div className="pt-4 border-t border-gray-700">
           <button
-            className="text-blue-600 hover:text-blue-800 font-medium transition"
+            className="text-blue-400 hover:text-blue-300 font-medium transition"
             onClick={() => router.push("/csv")}
           >
             View CSV File
