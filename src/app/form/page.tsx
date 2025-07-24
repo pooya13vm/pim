@@ -87,22 +87,35 @@ export default function DynamicFormPage() {
   };
   const categoryToSubcategories: Record<string, string[]> = {
     Jewelry: [
-      "Bracelets", "Rings", "Necklaces", "Earrings", "Pendants", "Custom Jewelry",
-      "Engraved Jewelry", "Children’s Jewelry", "Men’s Jewelry", "Women's Jewelry"
+      "Bracelets",
+      "Rings",
+      "Necklaces",
+      "Earrings",
+      "Pendants",
+      "Custom Jewelry",
+      "Engraved Jewelry",
+      "Children’s Jewelry",
+      "Men’s Jewelry",
+      "Women's Jewelry",
     ],
     Crystals: [
-      "Tumbled Stones", "Raw Specimens", "Crystal Clusters", "Polished", "Fetishes"
+      "Tumbled Stones",
+      "Raw Specimens",
+      "Crystal Clusters",
+      "Polished",
+      "Fetishes",
     ],
     Fossils: [
-      "Ammonites", "Orthoceras", "Trilobites", "Megalodon (Teeth / Shards)", "Fossil Jewelry"
+      "Ammonites",
+      "Orthoceras",
+      "Trilobites",
+      "Megalodon (Teeth / Shards)",
+      "Fossil Jewelry",
     ],
-    Art: [
-      "Paintings", "Pottery", "Textile Art", "Beadwork", "Sculptures"
-    ],
+    Art: ["Paintings", "Pottery", "Textile Art", "Beadwork", "Sculptures"],
     // ...add the rest accordingly
   };
-  
-  
+
   const renderField = (field: Field) => {
     const commonClasses = "border rounded px-3 py-2 w-full";
 
@@ -110,7 +123,7 @@ export default function DynamicFormPage() {
       const selectedCategory = formData["Category"];
       const options = categoryToSubcategories[selectedCategory] || [];
       const isDisabled = !selectedCategory;
-    
+
       return (
         <select
           className={commonClasses}
@@ -127,7 +140,7 @@ export default function DynamicFormPage() {
         </select>
       );
     }
-    
+
     if (field.type === "select" && field.options) {
       return (
         <select
@@ -238,10 +251,6 @@ export default function DynamicFormPage() {
           </button>
         </div>
       </form>
-    </main>
-  );
-}
-
     </main>
   );
 }
