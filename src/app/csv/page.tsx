@@ -27,7 +27,7 @@ export default function CSVViewPage() {
   if (rows.length === 0) return <div className="p-6">Loading CSV...</div>;
 
   return (
-    <main className="p-6  text-amber-50 min-h-screen">
+    <main className="p-6 bg-white text-black min-h-screen">
       <h2 className="text-2xl font-bold mb-6">CSV Contents</h2>
 
       <a
@@ -45,7 +45,7 @@ export default function CSVViewPage() {
               {rows[0].map((header, idx) => (
                 <th
                   key={idx}
-                  className="px-4 py-2 border border-gray-300 text-sm font-medium text-left whitespace-nowrap text-black"
+                  className="px-4 py-2 border border-gray-300 text-sm font-medium text-left whitespace-nowrap"
                 >
                   {header}
                 </th>
@@ -54,7 +54,7 @@ export default function CSVViewPage() {
           </thead>
           <tbody>
             {rows.slice(1).map((row, i) => (
-              <tr key={i} className="odd:bg-white even:bg-gray-100 text-black">
+              <tr key={i} className="odd:bg-white even:bg-gray-100">
                 {row.map((cell, j) => (
                   <td
                     key={j}

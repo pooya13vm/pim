@@ -155,7 +155,7 @@ export default function DynamicFormPage() {
   };
 
   return (
-    <main className="max-w-6xl mx-auto p-6 bg-gray-800 ">
+    <main className="max-w-6xl mx-auto p-6 bg-white mt-4 rounded-2xl">
       <h1 className="text-2xl font-bold mb-6">Form</h1>
       <form className="space-y-6">
         {schema.sections.map((section) => {
@@ -166,7 +166,7 @@ export default function DynamicFormPage() {
               <button
                 type="button"
                 onClick={() => toggleSection(section.name)}
-                className="w-full flex justify-between items-center px-4 py-3 bg-gray-700 hover:bg-gray-800 text-left font-semibold rounded-lg"
+                className="w-full flex justify-between items-center px-4 py-3 bg-gray-100 hover:bg-gray-150 text-left font-semibold rounded-lg"
               >
                 {section.name}
                 <span>

@@ -16,10 +16,10 @@ export default function HomePage() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-900 px-4 text-white">
-      <div className="bg-gray-800 p-8 rounded-xl shadow-lg w-full max-w-md text-center space-y-6 border border-gray-700">
+    <main className="flex flex-col items-center justify-center min-h-screen  px-4 ">
+      <div className=" p-8 rounded-xl shadow-lg w-full max-w-md text-center space-y-6 border border-gray-700">
         <h1 className="text-4xl font-extrabold">📷 GemLens</h1>
-        <p className="text-gray-300 text-sm">
+        <p className="text-gray-900 text-sm">
           Upload an image to create a new item
         </p>
 
