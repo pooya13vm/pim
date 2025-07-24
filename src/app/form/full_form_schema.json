@@ -1,766 +1,815 @@
 {
-    "sections": [
+  "sections": [
+    {
+      "name": "General Info",
+      "fields": [
         {
-            "name": "General Info",
-            "fields": [
-                {
-                    "name": "SKU",
-                    "label": "SKU",
-                    "type": "text"
-                },
-                {
-                    "name": "Product_Name",
-                    "label": "Product Name",
-                    "type": "text"
-                },
-                {
-                    "name": "Category",
-                    "label": "Category",
-                    "type": "select",
-                    "options": [
-                        "Jewelry",
-                        "Crystals",
-                        "Fossils",
-                        "Art",
-                        "D\u00e9cor",
-                        "Metaphysical",
-                        "Self-Care",
-                        "Education",
-                        "Custom"
-                    ]
-                },
-                {
-                    "name": "Subcategory",
-                    "label": "Subcategory",
-                    "type": "select",
-                    "options": [
-                        "Bracelets",
-                        "Rings",
-                        "Necklaces",
-                        "Earrings",
-                        "Pendants",
-                        "Bolos",
-                        "Brooches / Pins",
-                        "Squash Blossom Sets",
-                        "Anklets",
-                        "Chains",
-                        "Body Jewelry",
-                        "Belts & Belt Buckles",
-                        "Hair Accessories",
-                        "Beaded Jewelry",
-                        "Inlay Jewelry",
-                        "Engraved Jewelry",
-                        "Children\u2019s Jewelry",
-                        "Men\u2019s Jewelry",
-                        "Women's Jewelry",
-                        "Wedding & Engagement",
-                        "Jewelry Sets",
-                        "One-of-a-Kind",
-                        "Adjustable Jewelry",
-                        "Custom Jewelry",
-                        "Tumbled Stones",
-                        "Raw Specimens",
-                        "Crystal Clusters",
-                        "Polished",
-                        "Fetishes",
-                        "Crystal Sets / Grids",
-                        "Geodes & Geode Halves",
-                        "Freeforms",
-                        "Cathedrals",
-                        "Top-Shelf",
-                        "Ammonites",
-                        "Orthoceras",
-                        "Trilobites",
-                        "Mammoth (Tooth / Tusk / Hair)",
-                        "Cave Bear (Skull / Claw / Bone)",
-                        "Keichousaurus",
-                        "Mosasaur (Teeth / Vertebrae / Fossil)",
-                        "Megalodon (Teeth / Shards)",
-                        "Crinoids",
-                        "Coral Fossils",
-                        "Shell Fossils (Clams, Scallops, etc.)",
-                        "Coprolite",
-                        "Dinosaur Bone",
-                        "Fossil Jewelry",
-                        "Amber",
-                        "Paintings",
-                        "Pottery",
-                        "Textile Art",
-                        "Beadwork",
-                        "Carvings (Wood, Bone, Stone)",
-                        "Totems / Spirit Figures",
-                        "Sculptures",
-                        "Wall Hangings",
-                        "Featherwork",
-                        "Miniatures",
-                        "Wall Decor",
-                        "Table Decor",
-                        "Crystal Home Decor",
-                        "Candle Holders",
-                        "Bookends",
-                        "Wind Chimes",
-                        "Altar Decor",
-                        "Mirrors / Frames",
-                        "Trays / Bowls",
-                        "Boxes / Chests",
-                        "Stands / Displays",
-                        "Vases",
-                        "Incense Burners",
-                        "Dreamcatchers",
-                        "Coasters / Tile Art",
-                        "Utensils",
-                        "Tableware",
-                        "Chess Game Sets",
-                        "Sinks",
-                        "Tables",
-                        "Countertops",
-                        "Bathtubs",
-                        "Chairs",
-                        "Entomology Frames",
-                        "Intention Kits",
-                        "Smudging Tools (Sage, Palo Santo, Burners)",
-                        "Crystal Grids",
-                        "Pendulums",
-                        "Chakra Sets",
-                        "Spell Candles",
-                        "Intention Oils",
-                        "Herbs & Resins",
-                        "Tarot / Oracle Cards",
-                        "Runes",
-                        "Singing Bowls",
-                        "Tuning Forks",
-                        "Sacred Symbols / Amulets",
-                        "Essential Oils",
-                        "Gemstone-Infused Oils",
-                        "Bath Crystals / Soaks",
-                        "Body Scrubs",
-                        "Roll-Ons",
-                        "Aromatherapy Jewelry",
-                        "Lip Balms",
-                        "Crystal-Infused Sprays",
-                        "Non-Toxic Nail Polish",
-                        "Herbal Products",
-                        "Gem Water Bottles",
-                        "Chakra Balancing Sets",
-                        "Face Tools (Gua Sha, Rollers)",
-                        "Lotions",
-                        "Fragrance",
-                        "Massage Wands",
-                        "Glossary of Stones",
-                        "Books",
-                        "Children\u2019s Books",
-                        "Crystal Guides",
-                        "Blog",
-                        "Cards & Flashcards",
-                        "Posters / Charts",
-                        "Classes & Workshops",
-                        "In-Person Events",
-                        "Online Courses",
-                        "Custom Crystal Curation",
-                        "Custom Fossil Displays",
-                        "Custom Metaphysical Kits",
-                        "Bridal / Wedding Jewelry",
-                        "Memorial Jewelry / Heirloom Repurposing",
-                        "Corporate Gifting / Wholesale Sets",
-                        "Personalized Engravings",
-                        "Commissioned Art",
-                        "Gift Box Assemblies",
-                        "Subscription Box Customizations"
-                    ]
-                },
-                {
-                    "name": "Co_Subcategory",
-                    "label": "Co-Subcategory",
-                    "type": "text"
-                },
-                {
-                    "name": "Collection",
-                    "label": "Collection",
-                    "type": "select",
-                    "options": [
-                        "JWP"
-                    ]
-                },
-                {
-                    "name": "Material(s)",
-                    "label": "Material(s)",
-                    "type": "text"
-                },
-                {
-                    "name": "Finish_Plating",
-                    "label": "Finish/Plating",
-                    "type": "select",
-                    "options": [
-                        "Mirror Finish",
-                        "Satin Finish",
-                        "Brushed Finish",
-                        "Matte Finish",
-                        "Textured Finish",
-                        "Hammered Finish",
-                        "Sandblasted Finish",
-                        "Frosted Finish",
-                        "Stippled Finish",
-                        "Etched Finish",
-                        "Faceted Metal Finish",
-                        "Raw / Unfinished",
-                        "Organic Finish",
-                        "Oxidized Finish",
-                        "Antique Finish",
-                        "Vintage Finish",
-                        "Patina Finish (e.g., blue-green on copper)",
-                        "Engraved Finish",
-                        "Filigree Finish",
-                        "Polished Front / Matte Back (Mixed Finish)",
-                        "Hand-Hammered",
-                        "Hand-Carved",
-                        "Laser-Etched",
-                        "Stamped",
-                        "Reticulated (Melted surface texture)",
-                        "Brushed with Steel Wool",
-                        "Enamel-Coated",
-                        "Epoxy Resin Finish",
-                        "Electroformed Surface",
-                        "Gold Leaf Application",
-                        "Lacquer-Coated",
-                        "Powder-Coated",
-                        "Anodized (for titanium/niobium)",
-                        "Crackle / Cracked Surface (for artistic effect)",
-                        "Gold-Plated",
-                        "Gold-Filled",
-                        "Vermeil (Gold over Sterling Silver)",
-                        "Rose Gold-Plated",
-                        "White Gold-Plated",
-                        "Green Gold-Plated",
-                        "Silver-Plated",
-                        "Fine Silver-Plated",
-                        "Rhodium-Plated",
-                        "Black Rhodium-Plated",
-                        "Platinum-Plated",
-                        "Palladium-Plated",
-                        "Copper-Plated",
-                        "Brass-Plated",
-                        "Gunmetal-Plated",
-                        "Bronze-Plated",
-                        "Chrome-Plated",
-                        "Titanium-Plated",
-                        "Nickel-Plated (avoid for hypoallergenic customers)",
-                        "Zinc Alloy-Plated",
-                        "Electroplated Aura Finish (Titanium, Gold, Platinum on quartz or metals)",
-                        "Antique Gold Finish",
-                        "Antique Silver Finish",
-                        "Antique Copper Finish",
-                        "Oxidized Gold",
-                        "Oxidized Brass",
-                        "Colored Enamel Coating",
-                        "Iridescent Coating",
-                        "Holographic Foil",
-                        "Glitter Resin Overlay",
-                        "Luster Coating",
-                        "Protective Coating Applied",
-                        "Tarnish-Resistant Layer",
-                        "Hypoallergenic Sealant",
-                        "Water-Resistant Finish",
-                        "Wear-Resistant Coating",
-                        "Color Enhancement Only"
-                    ]
-                },
-                {
-                    "name": "Item_Style",
-                    "label": "Item Style",
-                    "type": "text"
-                },
-                {
-                    "name": "Gemstone(s)",
-                    "label": "Gemstone(s)",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_Type",
-                    "label": "Stone Type",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_Shape",
-                    "label": "Stone Shape",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_Cut",
-                    "label": "Stone Cut",
-                    "type": "text"
-                },
-                {
-                    "name": "Polish_Type",
-                    "label": "Polish Type",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_Size_(c)",
-                    "label": "Stone Size (c)",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_Clarity",
-                    "label": "Stone Clarity",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_Color(s)",
-                    "label": "Stone Color(s)",
-                    "type": "text"
-                },
-                {
-                    "name": "Optical_Phenomena",
-                    "label": "Optical Phenomena",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_Source",
-                    "label": "Stone Source",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_Pronounciation",
-                    "label": "Stone Pronounciation",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_Chemical_Formula",
-                    "label": "Stone Chemical Formula",
-                    "type": "text"
-                },
-                {
-                    "name": "Refractive_Index",
-                    "label": "Refractive Index",
-                    "type": "text"
-                },
-                {
-                    "name": "Luster",
-                    "label": "Luster",
-                    "type": "text"
-                },
-                {
-                    "name": "Streak",
-                    "label": "Streak",
-                    "type": "text"
-                },
-                {
-                    "name": "Cleavage",
-                    "label": "Cleavage",
-                    "type": "text"
-                },
-                {
-                    "name": "Crystal_Habit",
-                    "label": "Crystal Habit",
-                    "type": "text"
-                },
-                {
-                    "name": "Crystal_System",
-                    "label": "Crystal System",
-                    "type": "text"
-                },
-                {
-                    "name": "Crystal_Class",
-                    "label": "Crystal Class",
-                    "type": "text"
-                },
-                {
-                    "name": "Space_Groups",
-                    "label": "Space Groups",
-                    "type": "text"
-                },
-                {
-                    "name": "Twinning",
-                    "label": "Twinning",
-                    "type": "text"
-                },
-                {
-                    "name": "Fracture",
-                    "label": "Fracture",
-                    "type": "text"
-                },
-                {
-                    "name": "Melting_Point",
-                    "label": "Melting Point",
-                    "type": "text"
-                },
-                {
-                    "name": "Solubility",
-                    "label": "Solubility",
-                    "type": "text"
-                },
-                {
-                    "name": "Specific_Gravity",
-                    "label": "Specific Gravity",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_Treatment",
-                    "label": "Stone Treatment",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_Etymology",
-                    "label": "Stone Etymology",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_Commercial_Usage",
-                    "label": "Stone Commercial Usage",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_Spiritual",
-                    "label": "Stone Spiritual",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_Metaphysical_Traits",
-                    "label": "Stone Metaphysical Traits",
-                    "type": "text"
-                },
-                {
-                    "name": "Intentions",
-                    "label": "Intentions",
-                    "type": "text"
-                },
-                {
-                    "name": "Zodiac",
-                    "label": "Zodiac",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_Element(s)",
-                    "label": "Stone Element(s)",
-                    "type": "text"
-                },
-                {
-                    "name": "Chakras",
-                    "label": "Chakras",
-                    "type": "text"
-                },
-                {
-                    "name": "Planets",
-                    "label": "Planets",
-                    "type": "text"
-                },
-                {
-                    "name": "Birthstone",
-                    "label": "Birthstone",
-                    "type": "text"
-                },
-                {
-                    "name": "Frequency",
-                    "label": "Frequency",
-                    "type": "text"
-                },
-                {
-                    "name": "Item_Dimensions_(mm)",
-                    "label": "Item Dimensions (mm)",
-                    "type": "text"
-                },
-                {
-                    "name": "Weight_(g_carats)",
-                    "label": "Weight (g/carats)",
-                    "type": "text"
-                },
-                {
-                    "name": "Mohs_Hardness_(Beginning_Range)",
-                    "label": "Mohs Hardness (Beginning Range)",
-                    "type": "text"
-                },
-                {
-                    "name": "Mohs_Hardness_(Ending_Range)",
-                    "label": "Mohs Hardness (Ending Range)",
-                    "type": "text"
-                },
-                {
-                    "name": "Cost_of_Goods_Bulk",
-                    "label": "Cost of Goods Bulk",
-                    "type": "text"
-                },
-                {
-                    "name": "Item_Cost",
-                    "label": "Item Cost",
-                    "type": "text"
-                },
-                {
-                    "name": "Wholesale_Price",
-                    "label": "Wholesale Price",
-                    "type": "text"
-                },
-                {
-                    "name": "Retail_Price",
-                    "label": "Retail Price",
-                    "type": "text"
-                },
-                {
-                    "name": "Sale_Price",
-                    "label": "Sale Price",
-                    "type": "text"
-                },
-                {
-                    "name": "Discount_%",
-                    "label": "Discount %",
-                    "type": "text"
-                },
-                {
-                    "name": "Quantity_in_Stock",
-                    "label": "Quantity in Stock",
-                    "type": "text"
-                },
-                {
-                    "name": "Restock_Level",
-                    "label": "Restock Level",
-                    "type": "text"
-                },
-                {
-                    "name": "Supplier",
-                    "label": "Supplier",
-                    "type": "text"
-                },
-                {
-                    "name": "Date_Acquired",
-                    "label": "Date Acquired",
-                    "type": "text"
-                },
-                {
-                    "name": "PO___Invoice_#",
-                    "label": "PO / Invoice #",
-                    "type": "text"
-                },
-                {
-                    "name": "Restock_ETA",
-                    "label": "Restock ETA",
-                    "type": "text"
-                },
-                {
-                    "name": "Storage_Location",
-                    "label": "Storage Location",
-                    "type": "text"
-                },
-                {
-                    "name": "Display_Location",
-                    "label": "Display Location",
-                    "type": "text"
-                },
-                {
-                    "name": "D\u00e9cor_&_Crystal_Feng_Shui_Tips",
-                    "label": "D\u00e9cor & Crystal Feng Shui Tips",
-                    "type": "text"
-                },
-                {
-                    "name": "Status",
-                    "label": "Status",
-                    "type": "text"
-                },
-                {
-                    "name": "Sales_Channel_(In_Store_Online_Social_Media_Exclusive)",
-                    "label": "Sales Channel (In Store/Online/Social Media/Exclusive)",
-                    "type": "text"
-                },
-                {
-                    "name": "SEO_Product_Title",
-                    "label": "SEO Product Title",
-                    "type": "text"
-                },
-                {
-                    "name": "Short_Description",
-                    "label": "Short Description",
-                    "type": "text"
-                },
-                {
-                    "name": "Long_Description",
-                    "label": "Long Description",
-                    "type": "text"
-                },
-                {
-                    "name": "Primary_Keywords",
-                    "label": "Primary Keywords",
-                    "type": "text"
-                },
-                {
-                    "name": "Secondary_Keywords",
-                    "label": "Secondary Keywords",
-                    "type": "text"
-                },
-                {
-                    "name": "Meta_Title",
-                    "label": "Meta Title",
-                    "type": "text"
-                },
-                {
-                    "name": "Meta_Description",
-                    "label": "Meta Description",
-                    "type": "text"
-                },
-                {
-                    "name": "URL_Slug",
-                    "label": "URL Slug",
-                    "type": "text"
-                },
-                {
-                    "name": "Featured_in_Campaigns",
-                    "label": "Featured in Campaigns",
-                    "type": "text"
-                },
-                {
-                    "name": "Matching_Items",
-                    "label": "Matching Items",
-                    "type": "text"
-                },
-                {
-                    "name": "Custom_Engraving_Available",
-                    "label": "Custom Engraving Available",
-                    "type": "text"
-                },
-                {
-                    "name": "Customability___Custom_Order",
-                    "label": "Customability / Custom Order",
-                    "type": "text"
-                }
-            ]
+          "name": "SKU",
+          "label": "SKU",
+          "type": "text"
         },
         {
-            "name": "Jewelry Info",
-            "conditions": {
-                "category": "Jewelry"
-            },
-            "fields": [
-                {
-                    "name": "Bead_Drill",
-                    "label": "Bead Drill",
-                    "type": "text"
-                },
-                {
-                    "name": "Birefringence",
-                    "label": "Birefringence",
-                    "type": "text"
-                },
-                {
-                    "name": "Ring_Size",
-                    "label": "Ring Size",
-                    "type": "text"
-                },
-                {
-                    "name": "Chain_Length",
-                    "label": "Chain Length",
-                    "type": "text"
-                }
-            ]
+          "name": "Product_Name",
+          "label": "Product Name",
+          "type": "text"
         },
         {
-            "name": "Specimen Info",
-            "conditions": {
-                "category": "Specimen"
-            },
-            "fields": [
-                {
-                    "name": "Stone_Grade",
-                    "label": "Stone Grade",
-                    "type": "text"
-                }
-            ]
+          "name": "Category",
+          "label": "Category",
+          "type": "select",
+          "options": [
+            "Jewelry",
+            "Crystals",
+            "Fossils",
+            "Art",
+            "D\u00e9cor",
+            "Metaphysical",
+            "Self-Care",
+            "Education",
+            "Custom"
+          ]
         },
         {
-            "name": "Artist Info",
-            "fields": [
-                {
-                    "name": "Artist",
-                    "label": "Artist",
-                    "type": "text"
-                },
-                {
-                    "name": "Tribe",
-                    "label": "Tribe",
-                    "type": "text"
-                },
-                {
-                    "name": "Stone_History",
-                    "label": "Stone History",
-                    "type": "text"
-                },
-                {
-                    "name": "Packaging_Notes",
-                    "label": "Packaging Notes",
-                    "type": "text"
-                },
-                {
-                    "name": "Cleaning___Care_Notes",
-                    "label": "Cleaning / Care Notes",
-                    "type": "text"
-                },
-                {
-                    "name": "Cleansing___Charging_Notes",
-                    "label": "Cleansing / Charging Notes",
-                    "type": "text"
-                },
-                {
-                    "name": "Artist_Notes___Story",
-                    "label": "Artist Notes / Story",
-                    "type": "text"
-                }
-            ]
+          "name": "Subcategory",
+          "label": "Subcategory",
+          "type": "select",
+          "options": [
+            "Bracelets",
+            "Rings",
+            "Necklaces",
+            "Earrings",
+            "Pendants",
+            "Bolos",
+            "Brooches / Pins",
+            "Squash Blossom Sets",
+            "Anklets",
+            "Chains",
+            "Body Jewelry",
+            "Belts & Belt Buckles",
+            "Hair Accessories",
+            "Beaded Jewelry",
+            "Inlay Jewelry",
+            "Engraved Jewelry",
+            "Children\u2019s Jewelry",
+            "Men\u2019s Jewelry",
+            "Women's Jewelry",
+            "Wedding & Engagement",
+            "Jewelry Sets",
+            "One-of-a-Kind",
+            "Adjustable Jewelry",
+            "Custom Jewelry",
+            "Tumbled Stones",
+            "Raw Specimens",
+            "Crystal Clusters",
+            "Polished",
+            "Fetishes",
+            "Crystal Sets / Grids",
+            "Geodes & Geode Halves",
+            "Freeforms",
+            "Cathedrals",
+            "Top-Shelf",
+            "Ammonites",
+            "Orthoceras",
+            "Trilobites",
+            "Mammoth (Tooth / Tusk / Hair)",
+            "Cave Bear (Skull / Claw / Bone)",
+            "Keichousaurus",
+            "Mosasaur (Teeth / Vertebrae / Fossil)",
+            "Megalodon (Teeth / Shards)",
+            "Crinoids",
+            "Coral Fossils",
+            "Shell Fossils (Clams, Scallops, etc.)",
+            "Coprolite",
+            "Dinosaur Bone",
+            "Fossil Jewelry",
+            "Amber",
+            "Paintings",
+            "Pottery",
+            "Textile Art",
+            "Beadwork",
+            "Carvings (Wood, Bone, Stone)",
+            "Totems / Spirit Figures",
+            "Sculptures",
+            "Wall Hangings",
+            "Featherwork",
+            "Miniatures",
+            "Wall Decor",
+            "Table Decor",
+            "Crystal Home Decor",
+            "Candle Holders",
+            "Bookends",
+            "Wind Chimes",
+            "Altar Decor",
+            "Mirrors / Frames",
+            "Trays / Bowls",
+            "Boxes / Chests",
+            "Stands / Displays",
+            "Vases",
+            "Incense Burners",
+            "Dreamcatchers",
+            "Coasters / Tile Art",
+            "Utensils",
+            "Tableware",
+            "Chess Game Sets",
+            "Sinks",
+            "Tables",
+            "Countertops",
+            "Bathtubs",
+            "Chairs",
+            "Entomology Frames",
+            "Intention Kits",
+            "Smudging Tools (Sage, Palo Santo, Burners)",
+            "Crystal Grids",
+            "Pendulums",
+            "Chakra Sets",
+            "Spell Candles",
+            "Intention Oils",
+            "Herbs & Resins",
+            "Tarot / Oracle Cards",
+            "Runes",
+            "Singing Bowls",
+            "Tuning Forks",
+            "Sacred Symbols / Amulets",
+            "Essential Oils",
+            "Gemstone-Infused Oils",
+            "Bath Crystals / Soaks",
+            "Body Scrubs",
+            "Roll-Ons",
+            "Aromatherapy Jewelry",
+            "Lip Balms",
+            "Crystal-Infused Sprays",
+            "Non-Toxic Nail Polish",
+            "Herbal Products",
+            "Gem Water Bottles",
+            "Chakra Balancing Sets",
+            "Face Tools (Gua Sha, Rollers)",
+            "Lotions",
+            "Fragrance",
+            "Massage Wands",
+            "Glossary of Stones",
+            "Books",
+            "Children\u2019s Books",
+            "Crystal Guides",
+            "Blog",
+            "Cards & Flashcards",
+            "Posters / Charts",
+            "Classes & Workshops",
+            "In-Person Events",
+            "Online Courses",
+            "Custom Crystal Curation",
+            "Custom Fossil Displays",
+            "Custom Metaphysical Kits",
+            "Bridal / Wedding Jewelry",
+            "Memorial Jewelry / Heirloom Repurposing",
+            "Corporate Gifting / Wholesale Sets",
+            "Personalized Engravings",
+            "Commissioned Art",
+            "Gift Box Assemblies",
+            "Subscription Box Customizations"
+          ]
         },
         {
-            "name": "Media",
-            "fields": [
-                {
-                    "name": "Image_Alt_Text",
-                    "label": "Image Alt Text",
-                    "type": "file"
-                },
-                {
-                    "name": "Main_Image_File_Name",
-                    "label": "Main Image File Name",
-                    "type": "file"
-                },
-                {
-                    "name": "Gallery_Image_File_Names",
-                    "label": "Gallery Image File Names",
-                    "type": "file"
-                },
-                {
-                    "name": "Video_File_Name",
-                    "label": "Video File Name",
-                    "type": "file"
-                }
-            ]
+          "name": "Co_Subcategory",
+          "label": "Co-Subcategory",
+          "type": "text"
         },
         {
-            "name": "Marketing & Tags",
-            "fields": [
-                {
-                    "name": "Tagline",
-                    "label": "Tagline",
-                    "type": "text"
-                },
-                {
-                    "name": "Trending___Bestseller_Tag",
-                    "label": "Trending / Bestseller Tag",
-                    "type": "text"
-                },
-                {
-                    "name": "Edition_Info",
-                    "label": "Edition Info",
-                    "type": "select",
-                    "options": [
-                        "Limited Edition",
-                        "Vintage",
-                        "One of a Kind",
-                        "Custom Order",
-                        "Available",
-                        "Backordered",
-                        "Out of Stock",
-                        "SOLD"
-                    ]
-                },
-                {
-                    "name": "Linked_Blog_Articles",
-                    "label": "Linked Blog Articles",
-                    "type": "text"
-                }
-            ]
+          "name": "Collection",
+          "label": "Collection",
+          "type": "select",
+          "options": ["JWP"]
+        },
+        {
+          "name": "Material(s)",
+          "label": "Material(s)",
+          "type": "text"
+        },
+        {
+          "name": "Finish_Plating",
+          "label": "Finish/Plating",
+          "type": "select",
+          "options": [
+            "Mirror Finish",
+            "Satin Finish",
+            "Brushed Finish",
+            "Matte Finish",
+            "Textured Finish",
+            "Hammered Finish",
+            "Sandblasted Finish",
+            "Frosted Finish",
+            "Stippled Finish",
+            "Etched Finish",
+            "Faceted Metal Finish",
+            "Raw / Unfinished",
+            "Organic Finish",
+            "Oxidized Finish",
+            "Antique Finish",
+            "Vintage Finish",
+            "Patina Finish (e.g., blue-green on copper)",
+            "Engraved Finish",
+            "Filigree Finish",
+            "Polished Front / Matte Back (Mixed Finish)",
+            "Hand-Hammered",
+            "Hand-Carved",
+            "Laser-Etched",
+            "Stamped",
+            "Reticulated (Melted surface texture)",
+            "Brushed with Steel Wool",
+            "Enamel-Coated",
+            "Epoxy Resin Finish",
+            "Electroformed Surface",
+            "Gold Leaf Application",
+            "Lacquer-Coated",
+            "Powder-Coated",
+            "Anodized (for titanium/niobium)",
+            "Crackle / Cracked Surface (for artistic effect)",
+            "Gold-Plated",
+            "Gold-Filled",
+            "Vermeil (Gold over Sterling Silver)",
+            "Rose Gold-Plated",
+            "White Gold-Plated",
+            "Green Gold-Plated",
+            "Silver-Plated",
+            "Fine Silver-Plated",
+            "Rhodium-Plated",
+            "Black Rhodium-Plated",
+            "Platinum-Plated",
+            "Palladium-Plated",
+            "Copper-Plated",
+            "Brass-Plated",
+            "Gunmetal-Plated",
+            "Bronze-Plated",
+            "Chrome-Plated",
+            "Titanium-Plated",
+            "Nickel-Plated (avoid for hypoallergenic customers)",
+            "Zinc Alloy-Plated",
+            "Electroplated Aura Finish (Titanium, Gold, Platinum on quartz or metals)",
+            "Antique Gold Finish",
+            "Antique Silver Finish",
+            "Antique Copper Finish",
+            "Oxidized Gold",
+            "Oxidized Brass",
+            "Colored Enamel Coating",
+            "Iridescent Coating",
+            "Holographic Foil",
+            "Glitter Resin Overlay",
+            "Luster Coating",
+            "Protective Coating Applied",
+            "Tarnish-Resistant Layer",
+            "Hypoallergenic Sealant",
+            "Water-Resistant Finish",
+            "Wear-Resistant Coating",
+            "Color Enhancement Only"
+          ]
+        },
+        {
+          "name": "Item_Style",
+          "label": "Item Style",
+          "type": "text"
+        },
+        {
+          "name": "Gemstone(s)",
+          "label": "Gemstone(s)",
+          "type": "text"
+        },
+        {
+          "name": "Stone_Type",
+          "label": "Stone Type",
+          "type": "text"
+        },
+        {
+          "name": "Stone_Shape",
+          "label": "Stone Shape",
+          "type": "text"
+        },
+        {
+          "name": "Stone_Cut",
+          "label": "Stone Cut",
+          "type": "text"
+        },
+        {
+          "name": "Polish_Type",
+          "label": "Polish Type",
+          "type": "text"
+        },
+        {
+          "name": "Stone_Size_(c)",
+          "label": "Stone Size (c)",
+          "type": "text"
+        },
+        {
+          "name": "Stone_Clarity",
+          "label": "Stone Clarity",
+          "type": "text"
+        },
+        {
+          "name": "Stone_Color(s)",
+          "label": "Stone Color(s)",
+          "type": "text"
+        },
+        {
+          "name": "Optical_Phenomena",
+          "label": "Optical Phenomena",
+          "type": "text"
+        },
+        {
+          "name": "Stone_Source",
+          "label": "Stone Source",
+          "type": "text"
+        },
+        {
+          "name": "Stone_Pronounciation",
+          "label": "Stone Pronounciation",
+          "type": "text"
+        },
+        {
+          "name": "Stone_Chemical_Formula",
+          "label": "Stone Chemical Formula",
+          "type": "text"
+        },
+        {
+          "name": "Refractive_Index",
+          "label": "Refractive Index",
+          "type": "text"
+        },
+        {
+          "name": "Luster",
+          "label": "Luster",
+          "type": "text"
+        },
+        {
+          "name": "Streak",
+          "label": "Streak",
+          "type": "text"
+        },
+        {
+          "name": "Cleavage",
+          "label": "Cleavage",
+          "type": "text"
+        },
+        {
+          "name": "Crystal_Habit",
+          "label": "Crystal Habit",
+          "type": "text"
+        },
+        {
+          "name": "Crystal_System",
+          "label": "Crystal System",
+          "type": "text"
+        },
+        {
+          "name": "Crystal_Class",
+          "label": "Crystal Class",
+          "type": "text"
+        },
+        {
+          "name": "Space_Groups",
+          "label": "Space Groups",
+          "type": "text"
+        },
+        {
+          "name": "Twinning",
+          "label": "Twinning",
+          "type": "text"
+        },
+        {
+          "name": "Fracture",
+          "label": "Fracture",
+          "type": "text"
+        },
+        {
+          "name": "Melting_Point",
+          "label": "Melting Point",
+          "type": "text"
+        },
+        {
+          "name": "Solubility",
+          "label": "Solubility",
+          "type": "text"
+        },
+        {
+          "name": "Specific_Gravity",
+          "label": "Specific Gravity",
+          "type": "text"
+        },
+        {
+          "name": "Stone_Treatment",
+          "label": "Stone Treatment",
+          "type": "text"
+        },
+        {
+          "name": "Stone_Etymology",
+          "label": "Stone Etymology",
+          "type": "text"
+        },
+        {
+          "name": "Stone_Commercial_Usage",
+          "label": "Stone Commercial Usage",
+          "type": "text"
+        },
+        {
+          "name": "Stone_Spiritual",
+          "label": "Stone Spiritual",
+          "type": "text"
+        },
+        {
+          "name": "Stone_Metaphysical_Traits",
+          "label": "Stone Metaphysical Traits",
+          "type": "text"
+        },
+        {
+          "name": "Intentions",
+          "label": "Intentions",
+          "type": "text"
+        },
+        {
+          "name": "Zodiac",
+          "label": "Zodiac",
+          "type": "select",
+          "options": [
+            "Aries",
+            "Taurus",
+            "Gemini",
+            "Cancer",
+            "Leo",
+            "Cancer",
+            "Virgo",
+            "Libra",
+            "Scorpio",
+            "Sagittarius",
+            "Capicorn",
+            "Aquarius",
+            "Pisces"
+          ]
+        },
+        {
+          "name": "Stone_Element(s)",
+          "label": "Stone Element(s)",
+          "type": "select",
+          "options": ["Ether", "Fire", "Water", "Air", "Earth"]
+        },
+        {
+          "name": "Chakras",
+          "label": "Chakras",
+          "type": "select",
+          "options": [
+            "Root Chakra (Muladhara)",
+            "Sacral Chakra (Svadhisthana)",
+            "Solar Plexus Chakra (Manipura)",
+            "Heart Chakra (Anahata)",
+            "Throat Chakra (Vishuddha)",
+            "Third Eye Chakra (Ajna)",
+            "Crown Chakra (Sahasrara)"
+          ]
+        },
+        {
+          "name": "Planets",
+          "label": "Planets",
+          "type": "select",
+          "options": [
+            "Sun",
+            "Moon",
+            "Mercury",
+            "Venus",
+            "Mars",
+            "Jupiter",
+            "Saturn",
+            "Uranus",
+            "Neptune",
+            "Pluto"
+          ]
+        },
+        {
+          "name": "Birthstone",
+          "label": "Birthstone",
+          "type": "select",
+          "options": [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+          ]
+        },
+        {
+          "name": "Frequency",
+          "label": "Frequency",
+          "type": "text"
+        },
+        {
+          "name": "Item_Dimensions_(mm)",
+          "label": "Item Dimensions (mm)",
+          "type": "text"
+        },
+        {
+          "name": "Weight_(g_carats)",
+          "label": "Weight (g/carats)",
+          "type": "text"
+        },
+        {
+          "name": "Mohs_Hardness_(Beginning_Range)",
+          "label": "Mohs Hardness (Beginning Range)",
+          "type": "text"
+        },
+        {
+          "name": "Mohs_Hardness_(Ending_Range)",
+          "label": "Mohs Hardness (Ending Range)",
+          "type": "text"
+        },
+        {
+          "name": "Cost_of_Goods_Bulk",
+          "label": "Cost of Goods Bulk",
+          "type": "text"
+        },
+        {
+          "name": "Item_Cost",
+          "label": "Item Cost",
+          "type": "text"
+        },
+        {
+          "name": "Wholesale_Price",
+          "label": "Wholesale Price",
+          "type": "text"
+        },
+        {
+          "name": "Retail_Price",
+          "label": "Retail Price",
+          "type": "text"
+        },
+        {
+          "name": "Sale_Price",
+          "label": "Sale Price",
+          "type": "text"
+        },
+        {
+          "name": "Discount_%",
+          "label": "Discount %",
+          "type": "text"
+        },
+        {
+          "name": "Quantity_in_Stock",
+          "label": "Quantity in Stock",
+          "type": "text"
+        },
+        {
+          "name": "Restock_Level",
+          "label": "Restock Level",
+          "type": "text"
+        },
+        {
+          "name": "Supplier",
+          "label": "Supplier",
+          "type": "text"
+        },
+        {
+          "name": "Date_Acquired",
+          "label": "Date Acquired",
+          "type": "text"
+        },
+        {
+          "name": "PO___Invoice_#",
+          "label": "PO / Invoice #",
+          "type": "text"
+        },
+        {
+          "name": "Restock_ETA",
+          "label": "Restock ETA",
+          "type": "text"
+        },
+        {
+          "name": "Storage_Location",
+          "label": "Storage Location",
+          "type": "text"
+        },
+        {
+          "name": "Display_Location",
+          "label": "Display Location",
+          "type": "text"
+        },
+        {
+          "name": "D\u00e9cor_&_Crystal_Feng_Shui_Tips",
+          "label": "D\u00e9cor & Crystal Feng Shui Tips",
+          "type": "text"
+        },
+        {
+          "name": "Status",
+          "label": "Status",
+          "type": "text"
+        },
+        {
+          "name": "Sales_Channel_(In_Store_Online_Social_Media_Exclusive)",
+          "label": "Sales Channel (In Store/Online/Social Media/Exclusive)",
+          "type": "text"
+        },
+        {
+          "name": "SEO_Product_Title",
+          "label": "SEO Product Title",
+          "type": "text"
+        },
+        {
+          "name": "Short_Description",
+          "label": "Short Description",
+          "type": "text"
+        },
+        {
+          "name": "Long_Description",
+          "label": "Long Description",
+          "type": "text"
+        },
+        {
+          "name": "Primary_Keywords",
+          "label": "Primary Keywords",
+          "type": "text"
+        },
+        {
+          "name": "Secondary_Keywords",
+          "label": "Secondary Keywords",
+          "type": "text"
+        },
+        {
+          "name": "Meta_Title",
+          "label": "Meta Title",
+          "type": "text"
+        },
+        {
+          "name": "Meta_Description",
+          "label": "Meta Description",
+          "type": "text"
+        },
+        {
+          "name": "URL_Slug",
+          "label": "URL Slug",
+          "type": "text"
+        },
+        {
+          "name": "Featured_in_Campaigns",
+          "label": "Featured in Campaigns",
+          "type": "text"
+        },
+        {
+          "name": "Matching_Items",
+          "label": "Matching Items",
+          "type": "text"
+        },
+        {
+          "name": "Custom_Engraving_Available",
+          "label": "Custom Engraving Available",
+          "type": "text"
+        },
+        {
+          "name": "Customability___Custom_Order",
+          "label": "Customability / Custom Order",
+          "type": "text"
         }
-    ]
+      ]
+    },
+    {
+      "name": "Jewelry Info",
+      "conditions": {
+        "category": "Jewelry"
+      },
+      "fields": [
+        {
+          "name": "Bead_Drill",
+          "label": "Bead Drill",
+          "type": "text"
+        },
+        {
+          "name": "Birefringence",
+          "label": "Birefringence",
+          "type": "text"
+        },
+        {
+          "name": "Ring_Size",
+          "label": "Ring Size",
+          "type": "text"
+        },
+        {
+          "name": "Chain_Length",
+          "label": "Chain Length",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "name": "Specimen Info",
+      "conditions": {
+        "category": "Specimen"
+      },
+      "fields": [
+        {
+          "name": "Stone_Grade",
+          "label": "Stone Grade",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "name": "Artist Info",
+      "fields": [
+        {
+          "name": "Artist",
+          "label": "Artist",
+          "type": "text"
+        },
+        {
+          "name": "Tribe",
+          "label": "Tribe",
+          "type": "text"
+        },
+        {
+          "name": "Stone_History",
+          "label": "Stone History",
+          "type": "text"
+        },
+        {
+          "name": "Packaging_Notes",
+          "label": "Packaging Notes",
+          "type": "text"
+        },
+        {
+          "name": "Cleaning___Care_Notes",
+          "label": "Cleaning / Care Notes",
+          "type": "text"
+        },
+        {
+          "name": "Cleansing___Charging_Notes",
+          "label": "Cleansing / Charging Notes",
+          "type": "text"
+        },
+        {
+          "name": "Artist_Notes___Story",
+          "label": "Artist Notes / Story",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "name": "Media",
+      "fields": [
+        {
+          "name": "Image_Alt_Text",
+          "label": "Image Alt Text",
+          "type": "file"
+        },
+        {
+          "name": "Main_Image_File_Name",
+          "label": "Main Image File Name",
+          "type": "file"
+        },
+        {
+          "name": "Gallery_Image_File_Names",
+          "label": "Gallery Image File Names",
+          "type": "file"
+        },
+        {
+          "name": "Video_File_Name",
+          "label": "Video File Name",
+          "type": "file"
+        }
+      ]
+    },
+    {
+      "name": "Marketing & Tags",
+      "fields": [
+        {
+          "name": "Tagline",
+          "label": "Tagline",
+          "type": "text"
+        },
+        {
+          "name": "Trending___Bestseller_Tag",
+          "label": "Trending / Bestseller Tag",
+          "type": "text"
+        },
+        {
+          "name": "Edition_Info",
+          "label": "Edition Info",
+          "type": "select",
+          "options": [
+            "Limited Edition",
+            "Vintage",
+            "One of a Kind",
+            "Custom Order",
+            "Available",
+            "Backordered",
+            "Out of Stock",
+            "SOLD"
+          ]
+        },
+        {
+          "name": "Linked_Blog_Articles",
+          "label": "Linked Blog Articles",
+          "type": "text"
+        }
+      ]
+    }
+  ]
 }
