@@ -9,7 +9,7 @@ import Select from "react-select";
 interface Field {
   name: string;
   label: string;
-  type: "text" | "select" | "radio" | "file" | "imageUpload";
+  type: "text" | "select" | "file" | "imageUpload";
   options?: string[];
   dependsOn?: string;
   optionsMap?: Record<string, string[]>;

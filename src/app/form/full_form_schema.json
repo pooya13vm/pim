@@ -479,6 +479,7 @@
           "name": "Stone_Color(s)",
           "label": "Stone Color(s)",
           "type": "select",
+          "multiple": true,
           "options": [
             "Red",
             "Orange",
@@ -873,6 +874,7 @@
           "name": "Sales_Channel_(In_Store_Online_Social_Media_Exclusive)",
           "label": "Sales Channel (In Store/Online/Social Media/Exclusive)",
           "type": "select",
+          "multiple": true,
           "options": [
             "In Store",
             "In Store Only",
