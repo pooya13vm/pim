@@ -1,3 +1,4 @@
+// src/app/form/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -5,6 +6,7 @@ import axios from "axios";
 import formSchema from "./full_form_schema.json";
 import { useRouter, useSearchParams } from "next/navigation";
 import Select from "react-select";
+import { MultiValue } from "react-select";
 
 interface Field {
   name: string;
@@ -17,7 +19,10 @@ interface Field {
   //   conditions?: Record<string, string>;
   showIfIncludes?: Record<string, string[]>;
 }
-
+interface OptionType {
+  value: string;
+  label: string;
+}
 interface Section {
   name: string;
   conditions?: Record<string, string>;
@@ -127,11 +132,11 @@ export default function DynamicFormPage() {
           label: opt,
         }));
 
-        const handleMultiSelect = (selectedOptions: any) => {
+        const handleMultiSelect = (selectedOptions: MultiValue<OptionType>) => {
           const values = selectedOptions
-            ? selectedOptions.map((o: any) => o.value)
+            ? selectedOptions.map((o) => o.value)
             : [];
-          handleChange(field.name, values.join(",")); // Save as CSV
+          handleChange(field.name, values.join(","));
         };
 
         return (

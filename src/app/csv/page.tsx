@@ -1,3 +1,4 @@
+// src/app/csv/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -19,7 +20,7 @@ export default function CSVViewPage() {
         });
         setRows(parsed.data);
       })
-      .catch((err) => setError("No CSV file found."));
+      .catch(() => setError("No CSV file found."));
   }, []);
 
   if (error) return <div className="p-6 text-red-600">{error}</div>;

@@ -1,3 +1,5 @@
+// src/app/api/save/route.ts
+
 import { NextResponse } from "next/server";
 import { writeFile, appendFile, access } from "fs/promises";
 import path from "path";
@@ -7,11 +9,21 @@ import schema from "../../form/full_form_schema.json"; // JSON schema
 const FILE_PATH = path.join(process.cwd(), "public", "items.csv");
 
 // Extract keys and headers from schema
-const keys = schema.sections.flatMap((section: any) =>
-  section.fields.map((field: any) => field.name)
+interface Field {
+  name: string;
+  label: string;
+}
+
+interface Section {
+  fields: Field[];
+}
+
+const keys = (schema.sections as Section[]).flatMap((section) =>
+  section.fields.map((field) => field.name)
 );
-const headers = schema.sections.flatMap((section: any) =>
-  section.fields.map((field: any) => field.label)
+
+const headers = (schema.sections as Section[]).flatMap((section) =>
+  section.fields.map((field) => field.label)
 );
 
 export async function POST(req: Request) {
