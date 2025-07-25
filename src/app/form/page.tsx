@@ -1,6 +1,8 @@
 // src/app/form/page.tsx
 "use client";
+
 export const dynamic = "force-dynamic";
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 import formSchema from "./full_form_schema.json";
