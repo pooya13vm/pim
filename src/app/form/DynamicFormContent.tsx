@@ -106,68 +106,51 @@ export default function DynamicFormContent() {
     try {
       const finalData: Record<string, string> = { ...formData };
 
-      // 1. آپلود تصویر اصلی
-      const mainFileInput = document.querySelector<HTMLInputElement>(
-        'input[name="Main_Image_File_Name"]'
-      );
-      if (mainFileInput?.files?.[0]) {
+      // ✅ Helper برای آپلود فایل
+      const uploadFile = async (file: File): Promise<string> => {
         const uploadData = new FormData();
-        uploadData.append("file", mainFileInput.files[0]);
+        uploadData.append("file", file);
         const res = await fetch("/api/upload", {
           method: "POST",
           body: uploadData,
         });
         const json = await res.json();
-        if (json.success) {
-          finalData.Main_Image_File_Name = json.url;
-        } else {
-          alert("❌ Upload failed for Main Image");
-          return;
-        }
+        if (json.url) return json.url;
+        throw new Error("Upload failed");
+      };
+
+      // ✅ 1. آپلود تصویر اصلی
+      const mainFileInput = document.querySelector<HTMLInputElement>(
+        'input[name="Main_Image_File_Name"]'
+      );
+      if (mainFileInput?.files?.[0]) {
+        finalData.Main_Image_File_Name = await uploadFile(
+          mainFileInput.files[0]
+        );
       }
 
-      // 2. آپلود گالری تصاویر (چندگانه)
+      // ✅ 2. آپلود گالری تصاویر (چندگانه)
       const galleryInput = document.querySelector<HTMLInputElement>(
         'input[name="Gallery_Image_File_Names"]'
       );
       if (galleryInput?.files?.length) {
         const galleryUrls: string[] = [];
         for (const file of galleryInput.files) {
-          const uploadData = new FormData();
-          uploadData.append("file", file);
-          const res = await fetch("/api/upload", {
-            method: "POST",
-            body: uploadData,
-          });
-          const json = await res.json();
-          if (json.success) {
-            galleryUrls.push(json.url);
-          }
+          const url = await uploadFile(file);
+          galleryUrls.push(url);
         }
         finalData.Gallery_Image_File_Names = galleryUrls.join(","); // یا JSON.stringify(galleryUrls)
       }
 
-      // 3. آپلود ویدیو
+      // ✅ 3. آپلود ویدیو
       const videoInput = document.querySelector<HTMLInputElement>(
         'input[name="Video_File_Name"]'
       );
       if (videoInput?.files?.[0]) {
-        const uploadData = new FormData();
-        uploadData.append("file", videoInput.files[0]);
-        const res = await fetch("/api/upload", {
-          method: "POST",
-          body: uploadData,
-        });
-        const json = await res.json();
-        if (json.success) {
-          finalData.Video_File_Name = json.url;
-        } else {
-          alert("❌ Upload failed for Video");
-          return;
-        }
+        finalData.Video_File_Name = await uploadFile(videoInput.files[0]);
       }
 
-      // ذخیره داده در Supabase
+      // ✅ ارسال داده نهایی به API برای ذخیره در Supabase
       const saveRes = await fetch("/api/save", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -182,7 +165,7 @@ export default function DynamicFormContent() {
       }
     } catch (err) {
       console.error("Error:", err);
-      alert("❌ Unexpected error");
+      alert("❌ Unexpected error occurred");
     } finally {
       setLoading(false);
     }
