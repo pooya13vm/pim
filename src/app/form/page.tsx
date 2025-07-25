@@ -124,7 +124,6 @@ export default function DynamicFormPage() {
       } else {
         options = field.options || [];
       }
-
       // React Select for multi-select
       if (field.multiple) {
         const selectOptions = options.map((opt) => ({
