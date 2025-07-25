@@ -1,38 +1,35 @@
-// src/app/csv/page.tsx
-"use client";
-
+// "use client";
 import { useEffect, useState } from "react";
-import Papa from "papaparse";
 
 export default function CSVViewPage() {
   const [rows, setRows] = useState<string[][]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch("/items.csv")
+    fetch("/api/export")
       .then((res) => {
-        if (!res.ok) throw new Error("CSV not found");
+        if (!res.ok) throw new Error("Failed to fetch CSV");
         return res.text();
       })
       .then((text) => {
-        const parsed = Papa.parse<string[]>(text.trim(), {
-          skipEmptyLines: true,
-        });
-        setRows(parsed.data);
+        const parsed = text
+          .trim()
+          .split("\n")
+          .map((line) => line.split(","));
+        setRows(parsed);
       })
-      .catch(() => setError("No CSV file found."));
+      .catch(() => setError("Failed to load CSV from database"));
   }, []);
 
   if (error) return <div className="p-6 text-red-600">{error}</div>;
-
   if (rows.length === 0) return <div className="p-6">Loading CSV...</div>;
 
   return (
     <main className="p-6 bg-white text-black min-h-screen">
-      <h2 className="text-2xl font-bold mb-6">CSV Contents</h2>
+      <h2 className="text-2xl font-bold mb-6">Database Export (CSV)</h2>
 
       <a
-        href="/items.csv"
+        href="/api/export"
         download
         className="inline-block mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
       >
