@@ -107,7 +107,7 @@ export default function DynamicFormPage() {
   };
 
   const renderField = (field: Field) => {
-    const commonClasses = "border rounded px-3 py-2 w-full";
+    const commonClasses = "border rounded px-3 py-2 w-full bg-white";
 
     // Handle select (single or multi)
     if (field.type === "select") {
@@ -242,7 +242,7 @@ export default function DynamicFormPage() {
             </div>
           );
         })}
-        <div className="flex gap-4 mt-4">
+        <div className="flex gap-4 mt-4 mb-5">
           <button
             type="button"
             onClick={handleSubmit}
