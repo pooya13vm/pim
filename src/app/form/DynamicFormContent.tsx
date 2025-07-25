@@ -88,15 +88,101 @@ export default function DynamicFormContent() {
     });
   };
 
+  // const handleSubmit = async () => {
+  //   setLoading(true);
+  //   try {
+  //     await axios.post("/api/save", formData);
+  //     alert("✅ Form saved successfully!");
+  //     router.push("/");
+  //   } catch (err) {
+  //     console.error("Error saving form:", err);
+  //     alert("❌ Failed to save form.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      await axios.post("/api/save", formData);
-      alert("✅ Form saved successfully!");
-      router.push("/");
+      const finalData: Record<string, any> = { ...formData };
+
+      // 1. آپلود تصویر اصلی
+      const mainFileInput = document.querySelector<HTMLInputElement>(
+        'input[name="Main_Image_File_Name"]'
+      );
+      if (mainFileInput?.files?.[0]) {
+        const uploadData = new FormData();
+        uploadData.append("file", mainFileInput.files[0]);
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          body: uploadData,
+        });
+        const json = await res.json();
+        if (json.success) {
+          finalData.Main_Image_File_Name = json.url;
+        } else {
+          alert("❌ Upload failed for Main Image");
+          return;
+        }
+      }
+
+      // 2. آپلود گالری تصاویر (چندگانه)
+      const galleryInput = document.querySelector<HTMLInputElement>(
+        'input[name="Gallery_Image_File_Names"]'
+      );
+      if (galleryInput?.files?.length) {
+        const galleryUrls: string[] = [];
+        for (const file of galleryInput.files) {
+          const uploadData = new FormData();
+          uploadData.append("file", file);
+          const res = await fetch("/api/upload", {
+            method: "POST",
+            body: uploadData,
+          });
+          const json = await res.json();
+          if (json.success) {
+            galleryUrls.push(json.url);
+          }
+        }
+        finalData.Gallery_Image_File_Names = galleryUrls.join(","); // یا JSON.stringify(galleryUrls)
+      }
+
+      // 3. آپلود ویدیو
+      const videoInput = document.querySelector<HTMLInputElement>(
+        'input[name="Video_File_Name"]'
+      );
+      if (videoInput?.files?.[0]) {
+        const uploadData = new FormData();
+        uploadData.append("file", videoInput.files[0]);
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          body: uploadData,
+        });
+        const json = await res.json();
+        if (json.success) {
+          finalData.Video_File_Name = json.url;
+        } else {
+          alert("❌ Upload failed for Video");
+          return;
+        }
+      }
+
+      // ذخیره داده در Supabase
+      const saveRes = await fetch("/api/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(finalData),
+      });
+
+      const saveJson = await saveRes.json();
+      if (saveJson.success) {
+        alert("✅ Data saved successfully!");
+      } else {
+        alert(`❌ Failed to save: ${saveJson.error}`);
+      }
     } catch (err) {
-      console.error("Error saving form:", err);
-      alert("❌ Failed to save form.");
+      console.error("Error:", err);
+      alert("❌ Unexpected error");
     } finally {
       setLoading(false);
     }
