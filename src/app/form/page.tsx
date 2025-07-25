@@ -201,8 +201,8 @@ export default function DynamicFormPage() {
   };
 
   return (
-    <main className="max-w-6xl mx-auto p-6min-h-screen">
-      <h1 className="text-2xl font-bold mb-6">Dynamic Form</h1>
+    <main className="max-w-6xl mx-auto p-6min-h-screen mt-4">
+      <h1 className="text-2xl font-bold mb-6">Goods import form</h1>
       <form className="space-y-6">
         {schema.sections.map((section) => {
           if (!checkConditions(section.conditions)) return null;
