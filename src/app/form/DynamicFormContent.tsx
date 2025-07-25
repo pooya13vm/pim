@@ -88,19 +88,6 @@ export default function DynamicFormContent() {
     });
   };
 
-  // const handleSubmit = async () => {
-  //   setLoading(true);
-  //   try {
-  //     await axios.post("/api/save", formData);
-  //     alert("✅ Form saved successfully!");
-  //     router.push("/");
-  //   } catch (err) {
-  //     console.error("Error saving form:", err);
-  //     alert("❌ Failed to save form.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   const handleSubmit = async () => {
     setLoading(true);
     try {
