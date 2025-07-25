@@ -4,13 +4,18 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import formSchema from "./full_form_schema.json";
 import { useRouter, useSearchParams } from "next/navigation";
+import Select from "react-select";
 
 interface Field {
   name: string;
   label: string;
   type: "text" | "select" | "radio" | "file" | "imageUpload";
   options?: string[];
-  required?: boolean;
+  dependsOn?: string;
+  optionsMap?: Record<string, string[]>;
+  multiple?: boolean;
+  //   conditions?: Record<string, string>;
+  showIfIncludes?: Record<string, string[]>; // جدید
 }
 
 interface Section {
@@ -35,6 +40,7 @@ export default function DynamicFormPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  // Initialize form fields
   useEffect(() => {
     const initialValues: FormData = {};
     schema.sections.forEach((section) => {
@@ -45,18 +51,24 @@ export default function DynamicFormPage() {
     setFormData(initialValues);
   }, []);
 
+  // If imageName from HomePage, set it
   useEffect(() => {
     const imageName = searchParams.get("imageName");
     if (imageName) {
       setFormData((prev) => ({
         ...prev,
-        Main_Image_File_Name: imageName, // نام دقیق فیلد در JSON Schema
+        Main_Image_File_Name: imageName,
       }));
     }
   }, [searchParams]);
 
   const handleChange = (name: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => {
+      if (name === "Category") {
+        return { ...prev, Category: value, Subcategory: "" };
+      }
+      return { ...prev, [name]: value };
+    });
   };
 
   const checkConditions = (conditions?: Record<string, string>) => {
@@ -66,17 +78,25 @@ export default function DynamicFormPage() {
     );
   };
 
+  const checkShowIfIncludes = (conditions?: Record<string, string[]>) => {
+    if (!conditions) return true;
+    return Object.entries(conditions).every(([key, values]) => {
+      const selectedValues = formData[key]?.split(",") || [];
+      return values.some((val) => selectedValues.includes(val));
+    });
+  };
+
   const handleSubmit = async () => {
     setLoading(true);
     try {
       await axios.post("/api/save", formData);
       alert("✅ Form saved successfully!");
+      router.push("/");
     } catch (err) {
       console.error("Error saving form:", err);
       alert("❌ Failed to save form.");
     } finally {
       setLoading(false);
-      router.push("/");
     }
   };
 
@@ -85,72 +105,63 @@ export default function DynamicFormPage() {
       prev.includes(name) ? prev.filter((s) => s !== name) : [...prev, name]
     );
   };
-  const categoryToSubcategories: Record<string, string[]> = {
-    Jewelry: [
-      "Bracelets",
-      "Rings",
-      "Necklaces",
-      "Earrings",
-      "Pendants",
-      "Custom Jewelry",
-      "Engraved Jewelry",
-      "Children’s Jewelry",
-      "Men’s Jewelry",
-      "Women's Jewelry",
-    ],
-    Crystals: [
-      "Tumbled Stones",
-      "Raw Specimens",
-      "Crystal Clusters",
-      "Polished",
-      "Fetishes",
-    ],
-    Fossils: [
-      "Ammonites",
-      "Orthoceras",
-      "Trilobites",
-      "Megalodon (Teeth / Shards)",
-      "Fossil Jewelry",
-    ],
-    Art: ["Paintings", "Pottery", "Textile Art", "Beadwork", "Sculptures"],
-    // ...add the rest accordingly
-  };
 
   const renderField = (field: Field) => {
     const commonClasses = "border rounded px-3 py-2 w-full";
 
-    if (field.name === "Subcategory") {
-      const selectedCategory = formData["Category"];
-      const options = categoryToSubcategories[selectedCategory] || [];
-      const isDisabled = !selectedCategory;
+    // Handle select (single or multi)
+    if (field.type === "select") {
+      let options: string[] = [];
 
+      if (field.dependsOn && field.optionsMap) {
+        const parentValue = formData[field.dependsOn];
+        options = parentValue ? field.optionsMap[parentValue] || [] : [];
+      } else {
+        options = field.options || [];
+      }
+
+      // React Select for multi-select
+      if (field.multiple) {
+        const selectOptions = options.map((opt) => ({
+          value: opt,
+          label: opt,
+        }));
+
+        const handleMultiSelect = (selectedOptions: any) => {
+          const values = selectedOptions
+            ? selectedOptions.map((o: any) => o.value)
+            : [];
+          handleChange(field.name, values.join(",")); // Save as CSV
+        };
+
+        return (
+          <Select
+            isMulti
+            options={selectOptions}
+            value={
+              formData[field.name]
+                ? formData[field.name]
+                    .split(",")
+                    .map((val) => ({ value: val, label: val }))
+                : []
+            }
+            onChange={handleMultiSelect}
+            className="text-black"
+          />
+        );
+      }
+
+      // Normal single select
       return (
         <select
           className={commonClasses}
           value={formData[field.name]}
           onChange={(e) => handleChange(field.name, e.target.value)}
-          disabled={isDisabled}
-        >
-          <option value="">Select a subcategory...</option>
-          {options.map((opt) => (
-            <option key={opt} value={opt}>
-              {opt}
-            </option>
-          ))}
-        </select>
-      );
-    }
-
-    if (field.type === "select" && field.options) {
-      return (
-        <select
-          className={commonClasses}
-          value={formData[field.name]}
-          onChange={(e) => handleChange(field.name, e.target.value)}
+          disabled={field.dependsOn ? !formData[field.dependsOn] : false}
         >
           <option value="">Select...</option>
-          {field.options.map((opt) => (
-            <option key={opt} value={opt}>
+          {options.map((opt, index) => (
+            <option key={`${opt}-${index}`} value={opt}>
               {opt}
             </option>
           ))}
@@ -158,25 +169,7 @@ export default function DynamicFormPage() {
       );
     }
 
-    if (field.type === "radio" && field.options) {
-      return (
-        <div className="flex gap-4">
-          {field.options.map((opt) => (
-            <label key={opt} className="flex items-center gap-2">
-              <input
-                type="radio"
-                name={field.name}
-                value={opt}
-                checked={formData[field.name] === opt}
-                onChange={() => handleChange(field.name, opt)}
-              />
-              {opt}
-            </label>
-          ))}
-        </div>
-      );
-    }
-
+    // File upload
     if (field.type === "imageUpload" || field.type === "file") {
       return (
         <>
@@ -188,7 +181,7 @@ export default function DynamicFormPage() {
             }
           />
           {formData[field.name] && (
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-gray-400 mt-1">
               Selected: {formData[field.name]}
             </p>
           )}
@@ -196,6 +189,7 @@ export default function DynamicFormPage() {
       );
     }
 
+    // Default text input
     return (
       <input
         type="text"
@@ -207,18 +201,21 @@ export default function DynamicFormPage() {
   };
 
   return (
-    <main className="max-w-6xl mx-auto p-6 bg-white mt-4 rounded-2xl">
-      <h1 className="text-2xl font-bold mb-6">Form</h1>
+    <main className="max-w-6xl mx-auto p-6min-h-screen">
+      <h1 className="text-2xl font-bold mb-6">Dynamic Form</h1>
       <form className="space-y-6">
         {schema.sections.map((section) => {
           if (!checkConditions(section.conditions)) return null;
 
           return (
-            <div key={section.name} className="border rounded-lg shadow">
+            <div
+              key={section.name}
+              className="border border-gray-700 rounded-lg shadow"
+            >
               <button
                 type="button"
                 onClick={() => toggleSection(section.name)}
-                className="w-full flex justify-between items-center px-4 py-3 bg-gray-100 hover:bg-gray-150 text-left font-semibold rounded-lg"
+                className="w-full flex justify-between items-center px-4 py-3 bg-gray-200 hover:bg-gray-300 text-left font-semibold rounded-lg"
               >
                 {section.name}
                 <span>
@@ -227,14 +224,19 @@ export default function DynamicFormPage() {
               </button>
               {expandedSections.includes(section.name) && (
                 <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {section.fields.map((field) => (
-                    <div key={field.name}>
-                      <label className="block font-medium mb-1">
-                        {field.label}
-                      </label>
-                      {renderField(field)}
-                    </div>
-                  ))}
+                  {section.fields.map((field) => {
+                    // if (!checkConditions(field.conditions)) return null;
+                    if (!checkShowIfIncludes(field.showIfIncludes)) return null;
+
+                    return (
+                      <div key={field.name}>
+                        <label className="block font-medium mb-1">
+                          {field.label}
+                        </label>
+                        {renderField(field)}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>
