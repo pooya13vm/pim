@@ -15,7 +15,7 @@ interface Field {
   optionsMap?: Record<string, string[]>;
   multiple?: boolean;
   //   conditions?: Record<string, string>;
-  showIfIncludes?: Record<string, string[]>; // جدید
+  showIfIncludes?: Record<string, string[]>;
 }
 
 interface Section {
