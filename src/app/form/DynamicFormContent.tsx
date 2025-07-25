@@ -104,7 +104,7 @@ export default function DynamicFormContent() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const finalData: Record<string, any> = { ...formData };
+      const finalData: Record<string, string> = { ...formData };
 
       // 1. آپلود تصویر اصلی
       const mainFileInput = document.querySelector<HTMLInputElement>(
