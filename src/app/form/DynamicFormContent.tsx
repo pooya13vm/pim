@@ -53,13 +53,12 @@ export default function DynamicFormContent() {
     setFormData(initialValues);
   }, []);
 
-  // ✅ اگر تصویر از Query Param بیاد
   useEffect(() => {
-    const imageName = searchParams.get("imageName");
-    if (imageName) {
+    const imageUrl = searchParams.get("imageUrl");
+    if (imageUrl) {
       setFormData((prev) => ({
         ...prev,
-        Main_Image_File_Name: imageName,
+        Main_Image_File_Name: imageUrl,
       }));
     }
   }, [searchParams]);

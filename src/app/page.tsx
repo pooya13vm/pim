@@ -6,12 +6,29 @@ export default function HomePage() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const formData = new FormData();
-      formData.append("image", file);
-      router.push(`/form?imageName=${file.name}`);
+      const uploadData = new FormData();
+      uploadData.append("file", file);
+
+      try {
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          body: uploadData,
+        });
+
+        const json = await res.json();
+        if (json.success && json.url) {
+          // به جای اسم، URL واقعی رو پاس می‌دیم
+          router.push(`/form?imageUrl=${encodeURIComponent(json.url)}`);
+        } else {
+          alert("❌ Upload failed");
+        }
+      } catch (error) {
+        console.error("Upload error:", error);
+        alert("❌ Unexpected error");
+      }
     }
   };
 
