@@ -53,15 +53,15 @@ export default function DynamicFormContent() {
     setFormData(initialValues);
   }, []);
 
+  const imageUrl = searchParams.get("imageUrl");
   useEffect(() => {
-    const imageUrl = searchParams.get("imageUrl");
     if (imageUrl) {
       setFormData((prev) => ({
         ...prev,
         Main_Image_File_Name: imageUrl,
       }));
     }
-  }, [searchParams]);
+  }, [imageUrl]);
 
   const handleChange = (name: string, value: string) => {
     setFormData((prev) => {
