@@ -17,6 +17,7 @@ export async function POST(req: Request) {
     const blob = await put(file.name, file, {
       access: "public",
       token: process.env.VERCEL_BL_READ_WRITE_TOKEN,
+      addRandomSuffix: true,
     });
 
     console.log("✅ Upload successful:", blob.url);
