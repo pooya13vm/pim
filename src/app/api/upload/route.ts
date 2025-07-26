@@ -14,17 +14,9 @@ export async function POST(req: Request) {
       );
     }
 
-    console.log("✅ Uploading file:", file.name);
-    console.log(
-      "✅ Using token:",
-      process.env.VERCEL_BLOB_READ_WRITE_TOKEN
-        ? "Token Loaded"
-        : "Token Missing"
-    );
-
     const blob = await put(file.name, file, {
       access: "public",
-      token: process.env.VERCEL_BLOB_READ_WRITE_TOKEN,
+      token: process.env.VERCEL_BL_READ_WRITE_TOKEN,
     });
 
     console.log("✅ Upload successful:", blob.url);
