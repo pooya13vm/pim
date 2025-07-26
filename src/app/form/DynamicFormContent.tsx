@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import formSchema from "./full_form_schema.json";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Select, { MultiValue } from "react-select";
 
 interface Field {
@@ -41,6 +41,7 @@ export default function DynamicFormContent() {
   const [expandedSections, setExpandedSections] = useState<string[]>([]);
 
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   // ✅ مقداردهی اولیه برای همه فیلدها
   useEffect(() => {
@@ -150,6 +151,7 @@ export default function DynamicFormContent() {
       alert("❌ Unexpected error occurred");
     } finally {
       setLoading(false);
+      router.push("/");
     }
   };
 

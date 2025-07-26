@@ -25,6 +25,9 @@ export default function CSVViewPage() {
   if (error) return <div className="p-6 text-red-600">{error}</div>;
   if (rows.length === 0) return <div className="p-6">Loading CSV...</div>;
 
+  // ✅ Utility برای حذف کوتیشن‌ها
+  const cleanValue = (value: string) => value.replace(/^"|"$/g, "");
+
   return (
     <main className="p-6 bg-white text-black min-h-screen">
       <h2 className="text-2xl font-bold mb-6">Database Export (CSV)</h2>
@@ -46,7 +49,7 @@ export default function CSVViewPage() {
                   key={idx}
                   className="px-4 py-2 border border-gray-300 text-sm font-medium text-left whitespace-nowrap"
                 >
-                  {header}
+                  {cleanValue(header)}
                 </th>
               ))}
             </tr>
@@ -59,7 +62,7 @@ export default function CSVViewPage() {
                     key={j}
                     className="px-4 py-2 border border-gray-300 text-sm whitespace-nowrap"
                   >
-                    {cell}
+                    {cleanValue(cell)}
                   </td>
                 ))}
               </tr>
