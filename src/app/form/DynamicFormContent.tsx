@@ -224,22 +224,42 @@ export default function DynamicFormContent() {
       );
     }
 
+    //   if (field.type === "imageUpload" || field.type === "file") {
+    //     return (
+    //       <>
+    //         <input
+    //           type="file"
+    //           className={commonClasses}
+    //           onChange={(e) =>
+    //             handleChange(field.name, e.target.files?.[0]?.name || "")
+    //           }
+    //         />
+    //         {formData[field.name] && (
+    //           <p className="text-sm text-gray-400 mt-1">
+    //             Selected: {formData[field.name]}
+    //           </p>
+    //         )}
+    //       </>
+    //     );
+    //   }
+
+    //   return (
+    //     <input
+    //       type="text"
+    //       className={commonClasses}
+    //       value={formData[field.name]}
+    //       onChange={(e) => handleChange(field.name, e.target.value)}
+    //     />
+    //   );
+    // };
     if (field.type === "imageUpload" || field.type === "file") {
       return (
-        <>
-          <input
-            type="file"
-            className={commonClasses}
-            onChange={(e) =>
-              handleChange(field.name, e.target.files?.[0]?.name || "")
-            }
-          />
-          {formData[field.name] && (
-            <p className="text-sm text-gray-400 mt-1">
-              Selected: {formData[field.name]}
-            </p>
-          )}
-        </>
+        <input
+          type="file"
+          className={commonClasses}
+          name={field.name}
+          multiple={field.multiple}
+        />
       );
     }
 
