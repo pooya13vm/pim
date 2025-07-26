@@ -88,20 +88,20 @@ export default function DynamicFormContent() {
     });
   };
 
-  // ✅ آپلود فایل و دریافت URL از API
   const uploadFile = async (file: File): Promise<string> => {
     const uploadData = new FormData();
     uploadData.append("file", file);
+    console.log("Uploading file:", file.name); // ✅ لاگ اول
     const res = await fetch("/api/upload", {
       method: "POST",
       body: uploadData,
     });
     const json = await res.json();
+    console.log("Upload response:", json); // ✅ لاگ دوم
     if (json.url) return json.url;
     throw new Error("Upload failed");
   };
 
-  // ✅ وقتی فایل انتخاب شد: آپلود همزمان و ذخیره URL در formData
   const handleFileChange = async (
     fieldName: string,
     files: FileList | null
@@ -114,16 +114,18 @@ export default function DynamicFormContent() {
         const url = await uploadFile(file);
         urls.push(url);
       }
-      setFormData((prev) => ({
-        ...prev,
-        [fieldName]: urls.join(","), // یا JSON.stringify(urls)
-      }));
+      setFormData((prev) => {
+        const updated = { ...prev, [fieldName]: urls.join(",") };
+        console.log("Updated formData (Gallery):", updated); // ✅
+        return updated;
+      });
     } else {
       const url = await uploadFile(files[0]);
-      setFormData((prev) => ({
-        ...prev,
-        [fieldName]: url,
-      }));
+      setFormData((prev) => {
+        const updated = { ...prev, [fieldName]: url };
+        console.log("Updated formData (Single):", updated); // ✅
+        return updated;
+      });
     }
   };
 
@@ -131,6 +133,7 @@ export default function DynamicFormContent() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
+      console.log("Final data to save:", formData);
       const saveRes = await fetch("/api/save", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
