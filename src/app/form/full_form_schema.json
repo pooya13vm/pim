@@ -1,7 +1,7 @@
 {
   "sections": [
     {
-      "name": "General Info",
+      "name": "Product Details Information",
       "fields": [
         {
           "name": "SKU",
@@ -988,10 +988,7 @@
           "label": "Stone Grade",
           "type": "text"
         }
-      ]
-    },
-    {
-      "name": "Artist Info",
+      ],
       "fields": [
         {
           "name": "Artist",
@@ -1049,24 +1046,22 @@
       "name": "Media",
       "fields": [
         {
-          "name": "Image_Alt_Text",
-          "label": "Image Alt Text",
-          "type": "file"
+          "name": "MainImage",
+          "label": "Main Image",
+          "type": "file",
+          "multiple": false
         },
         {
-          "name": "Main_Image_File_Name",
-          "label": "Main Image File Name",
-          "type": "file"
+          "name": "GalleryImages",
+          "label": "Gallery Images",
+          "type": "file",
+          "multiple": true
         },
         {
-          "name": "Gallery_Image_File_Names",
-          "label": "Gallery Image File Names",
-          "type": "file"
-        },
-        {
-          "name": "Video_File_Name",
-          "label": "Video File Name",
-          "type": "file"
+          "name": "Video",
+          "label": "Video",
+          "type": "file",
+          "multiple": false
         }
       ]
     },
