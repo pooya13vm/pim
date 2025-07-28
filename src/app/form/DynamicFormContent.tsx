@@ -184,13 +184,52 @@ export default function DynamicFormContent() {
 
     /** ✅ FILE Upload Field */
     if (field.type === "file" || field.type === "imageUpload") {
+      const isMultiple = field.multiple || false;
+
+      const handleRemoveFile = (index?: number) => {
+        setPreviewFiles((prev) => {
+          const updatedPreviews = [...(prev[field.name] || [])];
+          if (index !== undefined) {
+            updatedPreviews.splice(index, 1);
+          } else {
+            updatedPreviews.splice(0, 1);
+          }
+          return { ...prev, [field.name]: updatedPreviews };
+        });
+
+        setFormData((prev) => {
+          if (isMultiple) {
+            const updatedUrls = Array.isArray(prev[field.name])
+              ? [...(prev[field.name] as string[])]
+              : [];
+            if (index !== undefined) {
+              updatedUrls.splice(index, 1);
+            }
+            return { ...prev, [field.name]: updatedUrls };
+          } else {
+            return { ...prev, [field.name]: "" };
+          }
+        });
+      };
+
       return (
         <>
           <button
             type="button"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
+            className={`bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition ${
+              !isMultiple &&
+              previewFiles[field.name] &&
+              previewFiles[field.name].length > 0
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+            }`}
             onClick={() =>
               document.getElementById(`${field.name}-file`)?.click()
+            }
+            disabled={
+              !isMultiple &&
+              previewFiles[field.name] &&
+              previewFiles[field.name].length > 0
             }
           >
             {field.name.toLowerCase().includes("video")
@@ -205,19 +244,30 @@ export default function DynamicFormContent() {
             accept={
               field.name.toLowerCase().includes("video") ? "video/*" : "image/*"
             }
-            multiple={field.multiple || false}
+            multiple={isMultiple}
             onChange={(e) => handleFileChange(field.name, e.target.files)}
           />
 
           {previewFiles[field.name] && (
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="mt-3 flex flex-wrap gap-3">
               {previewFiles[field.name].map((src, idx) => (
-                <img
+                <div
                   key={idx}
-                  src={src}
-                  alt="Preview"
-                  className="w-20 h-20 rounded-lg object-cover border border-gray-300 shadow"
-                />
+                  className="relative w-20 h-20 rounded-lg overflow-hidden border border-gray-300 shadow"
+                >
+                  <img
+                    src={src}
+                    alt="Preview"
+                    className="w-full h-full object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveFile(idx)}
+                    className="absolute top-1 right-1 bg-white text-black rounded-full w-6 h-6 flex items-center justify-center shadow hover:bg-gray-200"
+                  >
+                    ×
+                  </button>
+                </div>
               ))}
             </div>
           )}
