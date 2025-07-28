@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import formSchema from "./full_form_schema.json";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Select, { MultiValue } from "react-select";
 
 interface Field {
@@ -26,8 +26,8 @@ interface FormSchema {
   sections: Section[];
 }
 
-type FormData = Record<string, string | string[]>; // ✅ URL یا URL[]
-type PreviewFiles = Record<string, string[]>; // ✅ برای Preview فایل‌ها
+type FormData = Record<string, string | string[]>; // string for single, string[] for multi
+type PreviewFiles = Record<string, string[]>; // for local previews
 
 interface OptionType {
   value: string;
@@ -42,10 +42,9 @@ export default function DynamicFormContent() {
   const [loading, setLoading] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>([]);
 
-  const searchParams = useSearchParams();
   const router = useRouter();
 
-  // ✅ مقداردهی اولیه
+  /** ✅ مقداردهی اولیه برای تمام فیلدها */
   useEffect(() => {
     const initialValues: FormData = {};
     schema.sections.forEach((section) => {
@@ -56,6 +55,7 @@ export default function DynamicFormContent() {
     setFormData(initialValues);
   }, []);
 
+  /** ✅ تغییر مقدار فیلد */
   const handleChange = (name: string, value: string) => {
     setFormData((prev) => {
       if (name === "Category") {
@@ -65,6 +65,7 @@ export default function DynamicFormContent() {
     });
   };
 
+  /** ✅ بررسی شرایط نمایش سکشن */
   const checkConditions = (conditions?: Record<string, string>) => {
     if (!conditions) return true;
     return Object.entries(conditions).every(
@@ -72,6 +73,7 @@ export default function DynamicFormContent() {
     );
   };
 
+  /** ✅ بررسی نمایش فیلد بر اساس انتخاب‌های قبلی */
   const checkShowIfIncludes = (conditions?: Record<string, string[]>) => {
     if (!conditions) return true;
     return Object.entries(conditions).every(([key, values]) => {
@@ -82,6 +84,7 @@ export default function DynamicFormContent() {
     });
   };
 
+  /** ✅ آپلود فایل به سرور */
   const uploadFile = async (file: File): Promise<string> => {
     const uploadData = new FormData();
     uploadData.append("file", file);
@@ -94,6 +97,7 @@ export default function DynamicFormContent() {
     throw new Error("Upload failed");
   };
 
+  /** ✅ هندل انتخاب فایل */
   const handleFileChange = async (
     fieldName: string,
     files: FileList | null
@@ -104,8 +108,8 @@ export default function DynamicFormContent() {
     const urls: string[] = [];
 
     for (const file of Array.from(files)) {
-      previews.push(URL.createObjectURL(file)); // Preview
-      const uploadedUrl = await uploadFile(file); // Upload to server
+      previews.push(URL.createObjectURL(file)); // برای Preview
+      const uploadedUrl = await uploadFile(file); // آپلود به سرور
       urls.push(uploadedUrl);
     }
 
@@ -116,6 +120,7 @@ export default function DynamicFormContent() {
     }));
   };
 
+  /** ✅ MultiSelect Handler */
   const handleMultiSelect = (
     name: string,
     selected: MultiValue<OptionType>
@@ -124,9 +129,11 @@ export default function DynamicFormContent() {
     setFormData((prev) => ({ ...prev, [name]: values }));
   };
 
+  /** ✅ رندر فیلدهای فرم */
   const renderField = (field: Field) => {
     const commonClasses = "border rounded px-3 py-2 w-full bg-white";
 
+    /** ✅ SELECT Field */
     if (field.type === "select") {
       let options: string[] = [];
 
@@ -142,10 +149,14 @@ export default function DynamicFormContent() {
           <Select
             isMulti
             options={options.map((opt) => ({ value: opt, label: opt }))}
-            value={(formData[field.name] as string[]).map((val) => ({
-              value: val,
-              label: val,
-            }))}
+            value={
+              Array.isArray(formData[field.name])
+                ? (formData[field.name] as string[]).map((val) => ({
+                    value: val,
+                    label: val,
+                  }))
+                : []
+            }
             onChange={(selected) => handleMultiSelect(field.name, selected)}
             className="text-black"
           />
@@ -171,6 +182,7 @@ export default function DynamicFormContent() {
       );
     }
 
+    /** ✅ FILE Upload Field */
     if (field.type === "file" || field.type === "imageUpload") {
       return (
         <>
@@ -213,6 +225,7 @@ export default function DynamicFormContent() {
       );
     }
 
+    /** ✅ TEXT Input */
     return (
       <input
         type="text"
@@ -223,6 +236,7 @@ export default function DynamicFormContent() {
     );
   };
 
+  /** ✅ ذخیره فرم */
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -264,7 +278,7 @@ export default function DynamicFormContent() {
                 }
                 className="w-full flex justify-between items-center px-4 py-3 bg-gray-200 hover:bg-gray-300 text-left font-semibold rounded-lg"
               >
-                {section.name}{" "}
+                {section.name}
                 <span>
                   {expandedSections.includes(section.name) ? "−" : "+"}
                 </span>
