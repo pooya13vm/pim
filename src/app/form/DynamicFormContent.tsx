@@ -97,28 +97,6 @@ export default function DynamicFormContent() {
     throw new Error("Upload failed");
   };
 
-  /** ✅ هندل انتخاب فایل */
-  // const handleFileChange = async (
-  //   fieldName: string,
-  //   files: FileList | null
-  // ) => {
-  //   if (!files || files.length === 0) return;
-
-  //   const previews: string[] = [];
-  //   const urls: string[] = [];
-
-  //   for (const file of Array.from(files)) {
-  //     previews.push(URL.createObjectURL(file)); // برای Preview
-  //     const uploadedUrl = await uploadFile(file); // آپلود به سرور
-  //     urls.push(uploadedUrl);
-  //   }
-
-  //   setPreviewFiles((prev) => ({ ...prev, [fieldName]: previews }));
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [fieldName]: files.length > 1 ? urls : urls[0],
-  //   }));
-  // };
   const handleFileChange = async (
     fieldName: string,
     files: FileList | null
@@ -333,24 +311,6 @@ export default function DynamicFormContent() {
     );
   };
 
-  /** ✅ ذخیره فرم */
-  // const handleSubmit = async () => {
-  //   setLoading(true);
-  //   try {
-  //     console.log("Final Data:", formData);
-  //     const res = await fetch("/api/save", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(formData),
-  //     });
-  //     const json = await res.json();
-  //     if (json.success) alert("✅ Saved");
-  //   } catch (err) {
-  //     alert("❌ Error saving");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -382,6 +342,7 @@ export default function DynamicFormContent() {
       alert("❌ Unexpected error occurred");
     } finally {
       setLoading(false);
+      router.push("/");
     }
   };
 
