@@ -950,46 +950,7 @@
           "name": "Customability___Custom_Order",
           "label": "Customability / Custom Order",
           "type": "text"
-        }
-      ]
-    },
-    {
-      "name": "Jewelry Info",
-      "conditions": {
-        "category": "Jewelry"
-      },
-      "fields": [
-        {
-          "name": "Bead_Drill",
-          "label": "Bead Drill",
-          "type": "select",
-          "options": [
-            "Center-Drilled",
-            "Top-Drilled",
-            "Side-Drilled",
-            "Undrilled"
-          ]
         },
-        {
-          "name": "Birefringence",
-          "label": "Birefringence",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "name": "Specimen Info",
-      "conditions": {
-        "category": "Specimen"
-      },
-      "fields": [
-        {
-          "name": "Stone_Grade",
-          "label": "Stone Grade",
-          "type": "text"
-        }
-      ],
-      "fields": [
         {
           "name": "Artist",
           "label": "Artist",
@@ -1038,6 +999,27 @@
         {
           "name": "Artist_Notes___Story",
           "label": "Artist Notes / Story",
+          "type": "text"
+        },
+        {
+          "name": "Stone_Grade",
+          "label": "Stone Grade",
+          "type": "text"
+        },
+        {
+          "name": "Bead_Drill",
+          "label": "Bead Drill",
+          "type": "select",
+          "options": [
+            "Center-Drilled",
+            "Top-Drilled",
+            "Side-Drilled",
+            "Undrilled"
+          ]
+        },
+        {
+          "name": "Birefringence",
+          "label": "Birefringence",
           "type": "text"
         }
       ]
