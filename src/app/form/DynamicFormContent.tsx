@@ -98,26 +98,62 @@ export default function DynamicFormContent() {
   };
 
   /** ✅ هندل انتخاب فایل */
+  // const handleFileChange = async (
+  //   fieldName: string,
+  //   files: FileList | null
+  // ) => {
+  //   if (!files || files.length === 0) return;
+
+  //   const previews: string[] = [];
+  //   const urls: string[] = [];
+
+  //   for (const file of Array.from(files)) {
+  //     previews.push(URL.createObjectURL(file)); // برای Preview
+  //     const uploadedUrl = await uploadFile(file); // آپلود به سرور
+  //     urls.push(uploadedUrl);
+  //   }
+
+  //   setPreviewFiles((prev) => ({ ...prev, [fieldName]: previews }));
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [fieldName]: files.length > 1 ? urls : urls[0],
+  //   }));
+  // };
   const handleFileChange = async (
     fieldName: string,
     files: FileList | null
   ) => {
     if (!files || files.length === 0) return;
 
-    const previews: string[] = [];
-    const urls: string[] = [];
+    const isMultiple = schema.sections
+      .flatMap((section) => section.fields)
+      .find((f) => f.name === fieldName)?.multiple;
 
+    setPreviewFiles((prev) => {
+      const currentPreviews = prev[fieldName] || [];
+      const newPreviews = [...currentPreviews];
+      for (const file of Array.from(files)) {
+        newPreviews.push(URL.createObjectURL(file));
+      }
+      return { ...prev, [fieldName]: newPreviews };
+    });
+
+    const uploadedUrls: string[] = [];
     for (const file of Array.from(files)) {
-      previews.push(URL.createObjectURL(file)); // برای Preview
-      const uploadedUrl = await uploadFile(file); // آپلود به سرور
-      urls.push(uploadedUrl);
+      const uploadedUrl = await uploadFile(file);
+      uploadedUrls.push(uploadedUrl);
     }
 
-    setPreviewFiles((prev) => ({ ...prev, [fieldName]: previews }));
-    setFormData((prev) => ({
-      ...prev,
-      [fieldName]: files.length > 1 ? urls : urls[0],
-    }));
+    setFormData((prev) => {
+      if (isMultiple) {
+        const currentUrls = Array.isArray(prev[fieldName])
+          ? (prev[fieldName] as string[])
+          : [];
+        return { ...prev, [fieldName]: [...currentUrls, ...uploadedUrls] };
+      } else {
+        return { ...prev, [fieldName]: uploadedUrls[0] };
+      }
+    });
   };
 
   /** ✅ MultiSelect Handler */
@@ -250,25 +286,36 @@ export default function DynamicFormContent() {
 
           {previewFiles[field.name] && (
             <div className="mt-3 flex flex-wrap gap-3">
-              {previewFiles[field.name].map((src, idx) => (
-                <div
-                  key={idx}
-                  className="relative w-20 h-20 rounded-lg overflow-hidden border border-gray-300 shadow"
-                >
-                  <img
-                    src={src}
-                    alt="Preview"
-                    className="w-full h-full object-cover"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveFile(idx)}
-                    className="absolute top-1 right-1 bg-white text-black rounded-full w-6 h-6 flex items-center justify-center shadow hover:bg-gray-200"
+              {previewFiles[field.name].map((src, idx) => {
+                const isVideo = field.name.toLowerCase().includes("video");
+                return (
+                  <div
+                    key={idx}
+                    className="relative w-32 h-32 rounded-lg overflow-hidden border border-gray-300 shadow"
                   >
-                    ×
-                  </button>
-                </div>
-              ))}
+                    {isVideo ? (
+                      <video
+                        src={src}
+                        controls
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <img
+                        src={src}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveFile(idx)}
+                      className="absolute top-1 right-1 bg-white text-black rounded-full w-6 h-6 flex items-center justify-center shadow hover:bg-gray-200"
+                    >
+                      ×
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           )}
         </>
