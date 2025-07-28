@@ -334,19 +334,52 @@ export default function DynamicFormContent() {
   };
 
   /** ✅ ذخیره فرم */
+  // const handleSubmit = async () => {
+  //   setLoading(true);
+  //   try {
+  //     console.log("Final Data:", formData);
+  //     const res = await fetch("/api/save", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(formData),
+  //     });
+  //     const json = await res.json();
+  //     if (json.success) alert("✅ Saved");
+  //   } catch (err) {
+  //     alert("❌ Error saving");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      console.log("Final Data:", formData);
+      // ✅ آرایه‌ها را به رشته تبدیل می‌کنیم
+      const normalizedData = Object.fromEntries(
+        Object.entries(formData).map(([key, value]) => [
+          key,
+          Array.isArray(value) ? value.join(",") : value,
+        ])
+      );
+
+      console.log("Final Data (Normalized):", normalizedData);
+
       const res = await fetch("/api/save", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(normalizedData),
       });
+
       const json = await res.json();
-      if (json.success) alert("✅ Saved");
+      if (json.success) {
+        alert("✅ Saved");
+      } else {
+        console.error("Save Error:", json.error);
+        alert("❌ Failed to save");
+      }
     } catch (err) {
-      alert("❌ Error saving");
+      console.error("Unexpected Error:", err);
+      alert("❌ Unexpected error occurred");
     } finally {
       setLoading(false);
     }
