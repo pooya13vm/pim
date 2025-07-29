@@ -21,6 +21,10 @@ interface Section {
   conditions?: Record<string, string>;
   fields: Field[];
 }
+interface DynamicFormProps {
+  mode: "add" | "edit";
+  product?: any; // فقط وقتی mode=edit هست
+}
 
 interface FormSchema {
   sections: Section[];
@@ -36,7 +40,10 @@ interface OptionType {
 
 const schema = formSchema as FormSchema;
 
-export default function DynamicFormContent() {
+export default function DynamicFormContent({
+  mode,
+  product,
+}: DynamicFormProps) {
   const [formData, setFormData] = useState<FormData>({});
   const [previewFiles, setPreviewFiles] = useState<PreviewFiles>({});
   const [loading, setLoading] = useState(false);
@@ -44,16 +51,30 @@ export default function DynamicFormContent() {
 
   const router = useRouter();
 
-  /** ✅ مقداردهی اولیه برای تمام فیلدها */
   useEffect(() => {
+    if (!schema) return;
+
     const initialValues: FormData = {};
+
     schema.sections.forEach((section) => {
       section.fields.forEach((field) => {
-        initialValues[field.name] = field.multiple ? [] : "";
+        let value: string | string[] = "";
+
+        if (mode === "edit" && product) {
+          value = product[field.name] || "";
+          if (field.multiple && typeof value === "string") {
+            value = value.split(",").map((v: string) => v.trim());
+          }
+        } else {
+          value = field.multiple ? [] : "";
+        }
+
+        initialValues[field.name] = value;
       });
     });
+
     setFormData(initialValues);
-  }, []);
+  }, [mode, product]);
 
   /** ✅ تغییر مقدار فیلد */
   const handleChange = (name: string, value: string) => {
@@ -310,11 +331,9 @@ export default function DynamicFormContent() {
       />
     );
   };
-
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      // ✅ آرایه‌ها را به رشته تبدیل می‌کنیم
       const normalizedData = Object.fromEntries(
         Object.entries(formData).map(([key, value]) => [
           key,
@@ -322,29 +341,69 @@ export default function DynamicFormContent() {
         ])
       );
 
-      console.log("Final Data (Normalized):", normalizedData);
-
-      const res = await fetch("/api/save", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(normalizedData),
-      });
+      let res;
+      if (mode === "add") {
+        res = await fetch("/api/save", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(normalizedData),
+        });
+      } else {
+        res = await fetch(`/api/products/${product.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(normalizedData),
+        });
+      }
 
       const json = await res.json();
       if (json.success) {
         alert("✅ Saved");
       } else {
-        console.error("Save Error:", json.error);
         alert("❌ Failed to save");
       }
     } catch (err) {
-      console.error("Unexpected Error:", err);
+      console.error(err);
       alert("❌ Unexpected error occurred");
     } finally {
       setLoading(false);
-      router.push("/");
     }
   };
+
+  // const handleSubmit = async () => {
+  //   setLoading(true);
+  //   try {
+  //     // ✅ آرایه‌ها را به رشته تبدیل می‌کنیم
+  //     const normalizedData = Object.fromEntries(
+  //       Object.entries(formData).map(([key, value]) => [
+  //         key,
+  //         Array.isArray(value) ? value.join(",") : value,
+  //       ])
+  //     );
+
+  //     console.log("Final Data (Normalized):", normalizedData);
+
+  //     const res = await fetch("/api/save", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(normalizedData),
+  //     });
+
+  //     const json = await res.json();
+  //     if (json.success) {
+  //       alert("✅ Saved");
+  //     } else {
+  //       console.error("Save Error:", json.error);
+  //       alert("❌ Failed to save");
+  //     }
+  //   } catch (err) {
+  //     console.error("Unexpected Error:", err);
+  //     alert("❌ Unexpected error occurred");
+  //   } finally {
+  //     setLoading(false);
+  //     router.push("/");
+  //   }
+  // };
 
   return (
     <main className="max-w-6xl mx-auto p-6 min-h-screen mt-4">

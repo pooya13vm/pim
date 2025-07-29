@@ -193,7 +193,9 @@
           "label": "Ring Size",
           "type": "text",
           "showIfIncludes": {
-            "Subcategory": ["Rings"]
+            "Subcategory": [
+              "Rings"
+            ]
           }
         },
         {
@@ -201,7 +203,9 @@
           "label": "Chain Length",
           "type": "text",
           "showIfIncludes": {
-            "Subcategory": ["Necklaces"]
+            "Subcategory": [
+              "Necklaces"
+            ]
           }
         },
         {
@@ -689,7 +693,13 @@
           "name": "Stone_Element(s)",
           "label": "Stone Element(s)",
           "type": "select",
-          "options": ["Ether", "Fire", "Water", "Air", "Earth"]
+          "options": [
+            "Ether",
+            "Fire",
+            "Water",
+            "Air",
+            "Earth"
+          ]
         },
         {
           "name": "Chakras",
@@ -944,7 +954,10 @@
           "name": "Custom_Engraving_Available",
           "label": "Custom Engraving Available",
           "type": "select",
-          "options": ["Yes", "No"]
+          "options": [
+            "Yes",
+            "No"
+          ]
         },
         {
           "name": "Customability___Custom_Order",
