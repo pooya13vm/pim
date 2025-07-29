@@ -7,12 +7,16 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-// ✅ GET یک محصول
-export async function GET(
-  req: NextRequest,
-  context: { params: { id: string } }
-) {
+interface Context {
+  params: {
+    id: string;
+  };
+}
+
+// ✅ GET محصول با ID
+export async function GET(req: NextRequest, context: Context) {
   const { id } = context.params;
+
   try {
     const { data, error } = await supabase
       .from("items")
@@ -24,18 +28,16 @@ export async function GET(
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json(data, { status: 200 });
   } catch {
     return NextResponse.json({ error: "Server Error" }, { status: 500 });
   }
 }
 
-// ✅ PUT یک محصول
-export async function PUT(
-  req: NextRequest,
-  context: { params: { id: string } }
-) {
+// ✅ PUT محصول (آپدیت)
+export async function PUT(req: NextRequest, context: Context) {
   const { id } = context.params;
+
   try {
     const body = await req.json();
     const { data, error } = await supabase
@@ -48,18 +50,16 @@ export async function PUT(
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
-    return NextResponse.json({ success: true, data });
+    return NextResponse.json({ success: true, data }, { status: 200 });
   } catch {
     return NextResponse.json({ error: "Server Error" }, { status: 500 });
   }
 }
 
-// ✅ DELETE یک محصول
-export async function DELETE(
-  req: NextRequest,
-  context: { params: { id: string } }
-) {
+// ✅ DELETE محصول
+export async function DELETE(req: NextRequest, context: Context) {
   const { id } = context.params;
+
   try {
     const { error } = await supabase.from("items").delete().eq("id", id);
 
@@ -67,7 +67,7 @@ export async function DELETE(
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch {
     return NextResponse.json({ error: "Server Error" }, { status: 500 });
   }
