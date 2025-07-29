@@ -28,6 +28,7 @@ export async function GET() {
       },
     });
   } catch (err) {
+    console.log(err);
     return NextResponse.json({ error: "Unexpected error" }, { status: 500 });
   }
 }

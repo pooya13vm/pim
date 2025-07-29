@@ -32,6 +32,7 @@ export default function DashboardPage() {
         if (error) throw error;
         setItems(data || []);
       } catch (err) {
+        console.log(err);
         setError("Failed to load data from database");
       } finally {
         setLoading(false);

@@ -6,7 +6,7 @@ import DynamicFormContent from "@/app/form/DynamicFormContent";
 
 export default function EditProductPage() {
   const { id } = useParams();
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<Record<string, unknown> | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

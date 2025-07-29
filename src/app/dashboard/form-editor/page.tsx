@@ -56,22 +56,20 @@ export default function FormEditorPage() {
       ...section,
       fields: section.fields.map((field) => {
         if (field.name === selectedFieldName) {
-          let updatedField: any = {
+          const updatedField: Partial<Field> = {
             ...field,
             type: selectedType,
           };
 
-          // اگر نوع select یا multiselect باشد، options و multiple را اضافه کن
           if (selectedType === "select" || selectedType === "multiselect") {
             updatedField.options = options;
             updatedField.multiple = selectedType === "multiselect";
           } else {
-            // اگر نوع text باشد، options و multiple را حذف کن
             delete updatedField.options;
             delete updatedField.multiple;
           }
 
-          return updatedField;
+          return updatedField as Field;
         }
         return field;
       }),

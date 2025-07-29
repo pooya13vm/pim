@@ -23,7 +23,7 @@ interface Section {
 }
 interface DynamicFormProps {
   mode: "add" | "edit";
-  product?: any; // فقط وقتی mode=edit هست
+  product?: Record<string, unknown>;
 }
 
 interface FormSchema {
@@ -61,9 +61,9 @@ export default function DynamicFormContent({
         let value: string | string[] = "";
 
         if (mode === "edit" && product) {
-          value = product[field.name] || "";
+          value = (product[field.name] as string) || "";
           if (field.multiple && typeof value === "string") {
-            value = value.split(",").map((v: string) => v.trim());
+            value = value.split(",").map((v) => v.trim());
           }
         } else {
           value = field.multiple ? [] : "";
@@ -342,18 +342,21 @@ export default function DynamicFormContent({
       );
 
       let res;
+
       if (mode === "add") {
         res = await fetch("/api/save", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(normalizedData),
         });
-      } else {
-        res = await fetch(`/api/products/${product.id}`, {
+      } else if (mode === "edit" && product && "id" in product) {
+        res = await fetch(`/api/products/${product["id"]}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(normalizedData),
         });
+      } else {
+        throw new Error("Product data is missing for edit mode.");
       }
 
       const json = await res.json();
@@ -369,41 +372,6 @@ export default function DynamicFormContent({
       setLoading(false);
     }
   };
-
-  // const handleSubmit = async () => {
-  //   setLoading(true);
-  //   try {
-  //     // ✅ آرایه‌ها را به رشته تبدیل می‌کنیم
-  //     const normalizedData = Object.fromEntries(
-  //       Object.entries(formData).map(([key, value]) => [
-  //         key,
-  //         Array.isArray(value) ? value.join(",") : value,
-  //       ])
-  //     );
-
-  //     console.log("Final Data (Normalized):", normalizedData);
-
-  //     const res = await fetch("/api/save", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(normalizedData),
-  //     });
-
-  //     const json = await res.json();
-  //     if (json.success) {
-  //       alert("✅ Saved");
-  //     } else {
-  //       console.error("Save Error:", json.error);
-  //       alert("❌ Failed to save");
-  //     }
-  //   } catch (err) {
-  //     console.error("Unexpected Error:", err);
-  //     alert("❌ Unexpected error occurred");
-  //   } finally {
-  //     setLoading(false);
-  //     router.push("/");
-  //   }
-  // };
 
   return (
     <main className="max-w-6xl mx-auto p-6 min-h-screen mt-4">
