@@ -98,21 +98,17 @@ export default function AddPendantPage() {
   };
 
   return (
-    <main className="max-w-6xl mx-auto p-6">
-      <h1 className="text-2xl font-semibold mb-6">
-        Add Product page{" "}
-        <span className="font-normal">{schema.baseTitle} - </span>
-        <span className="text-red-600 font-semibold">Add pendant</span>
-      </h1>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <main className="max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* pendant metal */}
-        <section>
-          <label className="block mb-2 text-gray-800">pendant Metal</label>
+        <section className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            Pendant metal
+          </label>
           <select
             value={metal}
             onChange={(e) => setMetal(e.target.value)}
-            className="w-full border rounded px-3 py-2"
+            className="w-full h-10 border rounded px-3 bg-white"
           >
             <option value=""></option>
             {metalOptions.map((m) => (
@@ -125,27 +121,43 @@ export default function AddPendantPage() {
 
         {/* dimensions */}
         <section className="md:col-span-2">
-          <div className="mb-2 text-xl font-medium">Pendant Dimension</div>
-          <div className="flex items-end gap-3">
-            <div>
-              <label className="block mb-2 text-gray-800">H:</label>
-              <input
-                type="number"
-                value={height}
-                onChange={(e) => setHeight(e.target.value)}
-                className="w-28 border rounded px-3 py-2"
-                placeholder="___"
-              />
+          <div className="mb-2 text-base font-semibold text-gray-800">
+            Pendant dimensions
+          </div>
+          <div className="flex items-end gap-4">
+            <div className="space-y-1">
+              <label className="block text-sm font-medium text-gray-700">
+                H
+              </label>
+              <div className="relative">
+                <input
+                  type="number"
+                  value={height}
+                  onChange={(e) => setHeight(e.target.value)}
+                  className="w-32 h-10 border rounded pl-3 pr-10 bg-white"
+                  placeholder="—"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm select-none">
+                  mm
+                </span>
+              </div>
             </div>
-            <div>
-              <label className="block mb-2 text-gray-800">W:</label>
-              <input
-                type="number"
-                value={width}
-                onChange={(e) => setWidth(e.target.value)}
-                className="w-28 border rounded px-3 py-2"
-                placeholder="___"
-              />
+            <div className="space-y-1">
+              <label className="block text-sm font-medium text-gray-700">
+                W
+              </label>
+              <div className="relative">
+                <input
+                  type="number"
+                  value={width}
+                  onChange={(e) => setWidth(e.target.value)}
+                  className="w-32 h-10 border rounded pl-3 pr-10 bg-white"
+                  placeholder="—"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm select-none">
+                  mm
+                </span>
+              </div>
             </div>
           </div>
         </section>
@@ -156,14 +168,16 @@ export default function AddPendantPage() {
         {stones.map((row, idx) => (
           <div
             key={idx}
-            className="grid grid-cols-1 md:grid-cols-[1fr_1fr_200px_100px] items-end gap-3 border-t pt-6"
+            className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] items-end gap-4 border rounded p-4"
           >
-            <div>
-              <label className="block mb-1 text-gray-800">Stone</label>
+            <div className="space-y-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Stone
+              </label>
               <select
                 value={row.stone}
                 onChange={(e) => updateStone(idx, "stone", e.target.value)}
-                className="w-full border rounded px-3 py-2"
+                className="w-full h-10 border rounded px-3 bg-white"
               >
                 <option value=""></option>
                 {stoneOptions.map((opt) => (
@@ -174,12 +188,14 @@ export default function AddPendantPage() {
               </select>
             </div>
 
-            <div>
-              <label className="block mb-1 text-gray-800">Stone color</label>
+            <div className="space-y-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Stone color
+              </label>
               <select
                 value={row.color}
                 onChange={(e) => updateStone(idx, "color", e.target.value)}
-                className="w-full border rounded px-3 py-2"
+                className="w-full h-10 border rounded px-3 bg-white"
               >
                 <option value=""></option>
                 {colorOptions.map((opt) => (
@@ -190,22 +206,29 @@ export default function AddPendantPage() {
               </select>
             </div>
 
-            <div>
-              <label className="block mb-1 text-gray-800">Carat</label>
-              <input
-                type="number"
-                value={row.carat}
-                onChange={(e) => updateStone(idx, "carat", e.target.value)}
-                className="w-full border rounded px-3 py-2"
-                placeholder="enter"
-              />
+            <div className="space-y-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Carat
+              </label>
+              <div className="relative">
+                <input
+                  type="number"
+                  value={row.carat}
+                  onChange={(e) => updateStone(idx, "carat", e.target.value)}
+                  className="w-full h-10 border rounded pl-3 pr-10 bg-white"
+                  placeholder="—"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm select-none">
+                  ct
+                </span>
+              </div>
             </div>
 
-            <div className="flex">
+            <div className="flex justify-end">
               <button
                 type="button"
                 onClick={() => removeStone(idx)}
-                className="ml-auto border rounded px-3 py-2 text-gray-700 hover:bg-gray-50"
+                className="h-10 px-3 border rounded text-sm text-gray-700 hover:bg-gray-50"
               >
                 Delete
               </button>
@@ -216,34 +239,23 @@ export default function AddPendantPage() {
         <button
           type="button"
           onClick={addStone}
-          className="text-blue-600 hover:underline"
+          className="text-sm text-blue-600 hover:underline"
         >
           + add stone
         </button>
       </div>
 
-      {/* footer */}
-      <div className="mt-10 flex justify-end gap-3">
-        <button
-          type="button"
-          onClick={() => router.replace("/dashboard/products/add/StepTwo")}
-          className="px-6 py-2 rounded border border-gray-300 hover:bg-gray-50"
-        >
-          Cancel
-        </button>
-        <button
-          type="button"
-          disabled={!canSave}
-          onClick={onSave}
-          className={`px-6 py-2 rounded ${
-            canSave
-              ? "bg-blue-600 text-white hover:bg-blue-700"
-              : "bg-gray-300 text-gray-600 cursor-not-allowed"
-          }`}
-        >
-          Save pendant
-        </button>
-      </div>
+      {/* هیدن‌کردن اسپینرهای number برای یکدست‌شدن ورودی‌ها */}
+      <style jsx>{`
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        input[type="number"] {
+          -moz-appearance: textfield;
+        }
+      `}</style>
     </main>
   );
 }

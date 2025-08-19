@@ -1,18 +1,8 @@
-// "use client";
-// import { Suspense } from "react";
-// import DynamicFormContent from "@/app/form/DynamicFormContent";
-
-// export default function AddProductPage() {
-//   return (
-//     <Suspense fallback={<div>Loading form...</div>}>
-//       <DynamicFormContent mode="add" />
-//     </Suspense>
-//   );
-// }
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Step2Section from "./StepTwo/page";
 
 type Kind = "wearable" | "collectable";
 type ImageItem = { id: string; dataUrl: string; name: string; size: number };
@@ -42,6 +32,9 @@ export default function AddProductStepOne() {
   const [images, setImages] = useState<ImageItem[]>([]);
   const [mainImageId, setMainImageId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // ---- progressive reveal (Section 2 under the form)
+  const [showExtraSection, setShowExtraSection] = useState(false);
 
   const artistOptions = useMemo(
     () => ["—", "Unknown", "Local Artist", "Guest Artist", "Curated"],
@@ -94,6 +87,7 @@ export default function AddProductStepOne() {
       // ignore
     }
   }, []);
+
   const onClickCancel = () => {
     // پاک کردن درفت از حافظه
     try {
@@ -109,10 +103,12 @@ export default function AddProductStepOne() {
     setArtist("");
     setImages([]);
     setMainImageId(null);
+    setShowExtraSection(false); // بستن سکشن جدید
 
     // خالی‌کردن ورودی فایل
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
+
   // ---------- file helpers ----------
   const fileToDataURL = (file: File) =>
     new Promise<string>((resolve, reject) => {
@@ -151,17 +147,9 @@ export default function AddProductStepOne() {
 
   const setMain = (id: string) => setMainImageId(id);
 
-  const canProceed =
-    sku.trim().length > 0 &&
-    productName.trim().length > 0 &&
-    quantity.trim().length > 0 &&
-    cost.trim().length > 0 &&
-    images.length > 0;
-
-  // ---------- persist & go next ----------
+  // ---------- persist & reveal next section ----------
   const onClickNext = () => {
-    if (!canProceed) return;
-
+    // ذخیره‌ی درفت مثل قبل (بدون شرط ولیدیشن)
     const step1: Step1Draft = {
       sku: sku.trim(),
       productName: productName.trim(),
@@ -181,10 +169,8 @@ export default function AddProductStepOne() {
       const raw = sessionStorage.getItem(DRAFT_KEY);
       const existing = raw ? JSON.parse(raw) : {};
 
-      // merge: چیزی از step2/pendants پاک نشود
       const merged = {
         ...existing,
-        // برای سازگاری رو به عقب، فیلدهای اصلی را هم روی ریشه نگه می‌داریم
         sku: step1.sku,
         productName: step1.productName,
         quantity: step1.quantity,
@@ -192,7 +178,6 @@ export default function AddProductStepOne() {
         kind: step1.kind,
         artist: step1.artist,
         images: step1.images,
-        // شیء استانداردِ step1
         step1,
         step: 1,
         updatedAt: Date.now(),
@@ -203,7 +188,8 @@ export default function AddProductStepOne() {
       // ignore
     }
 
-    router.push("/dashboard/products/add/StepTwo");
+    // به‌جای رفتن به صفحه‌ی بعد، سکشن جدید را نشان بده
+    setShowExtraSection(true);
   };
 
   // ---------- UI ----------
@@ -246,14 +232,19 @@ export default function AddProductStepOne() {
 
             <div>
               <label className="block mb-2 text-gray-800">Cost</label>
-              <input
-                type="number"
-                min={0}
-                step="0.01"
-                value={cost}
-                onChange={(e) => setCost(e.target.value)}
-                className="w-full border rounded px-3 py-2"
-              />
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 select-none">
+                  $
+                </span>
+                <input
+                  type="number"
+                  min={0}
+                  step="0.01"
+                  value={cost}
+                  onChange={(e) => setCost(e.target.value)}
+                  className="w-full border rounded pl-7 pr-3 py-2"
+                />
+              </div>
             </div>
           </div>
 
@@ -385,32 +376,46 @@ export default function AddProductStepOne() {
         </section>
       </div>
 
+      {/* --- NEW: Extra Section shows under the form, above the footer --- */}
+      {showExtraSection && (
+        <section className="mt-8 p-4 ">
+          <Step2Section />
+        </section>
+      )}
+
       {/* footer */}
       <div className="mt-8 flex justify-end gap-3">
         <button
           type="button"
           onClick={onClickCancel}
-          className={`px-6 py-2 rounded ${
-            canProceed
-              ? "bg-blue-600 text-white hover:bg-blue-700"
-              : "bg-gray-300 text-gray-600 cursor-not-allowed"
-          }`}
+          className="px-6 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-50"
         >
           Cancel
         </button>
+
+        {/* Next همیشه فعال است */}
         <button
           type="button"
-          disabled={!canProceed}
           onClick={onClickNext}
-          className={`px-6 py-2 rounded ${
-            canProceed
-              ? "bg-blue-600 text-white hover:bg-blue-700"
-              : "bg-gray-300 text-gray-600 cursor-not-allowed"
-          }`}
+          className="px-6 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
         >
-          Next
+          {showExtraSection ? "Save" : "Next"}
         </button>
       </div>
+
+      {/* HIDE number input spinners for all number inputs in this component */}
+      <style jsx>{`
+        /* Chrome, Safari, Edge, Opera */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        /* Firefox */
+        input[type="number"] {
+          -moz-appearance: textfield;
+        }
+      `}</style>
     </main>
   );
 }

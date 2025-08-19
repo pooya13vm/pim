@@ -1,20 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
-
 import schemaJson from "@/app/schemas/form.json";
 import type { Step2Schema, Step2Field } from "@/app/schemas/types";
-
-const schema: Step2Schema = schemaJson as Step2Schema;
-const DRAFT_KEY = "productDraft";
-
-const STRAND = {
-  CHAIN: "Chain",
-  LEATHER: "Leather cord",
-  BEADED: "Beaded",
-  NONE: "None",
-} as const;
+import AddPendantPage from "../pendent/page";
 
 type Data = Record<string, string>;
 type BeadedRow = {
@@ -30,23 +19,31 @@ type Pendant = {
   width?: string;
   stones: PendantStone[];
 };
-export default function Step2Page() {
-  const router = useRouter();
+
+const schema: Step2Schema = schemaJson as Step2Schema;
+const DRAFT_KEY = "productDraft";
+
+const STRAND = {
+  CHAIN: "Chain",
+  LEATHER: "Leather cord",
+  BEADED: "Beaded",
+  NONE: "None",
+} as const;
+
+export default function Step2Section({ onBack }: { onBack?: () => void }) {
   const [pendants, setPendants] = useState<Pendant[]>([]);
   const [data, setData] = useState<Data>({});
   const [beadedStones, setBeadedStones] = useState<BeadedRow[]>([]);
+  const [showPendant, setShowPendant] = useState<Boolean>(false);
 
   // ---------- helpers from schema ----------
   const allFields: Step2Field[] = schema.groups.flatMap(
     (g) => g.fields as Step2Field[]
   );
-
-  const beadedFieldNames = new Set([
-    "stone",
-    "stoneColor",
-    "beadedFinish",
-    "beadedShape",
-  ]);
+  const beadedFieldNames = useMemo(
+    () => new Set(["stone", "stoneColor", "beadedFinish", "beadedShape"]),
+    []
+  );
 
   const pickField = (name: string) =>
     allFields.find((f) => f.name === name) as Step2Field | undefined;
@@ -56,32 +53,25 @@ export default function Step2Page() {
   const optionsFinish = pickField("beadedFinish")?.options ?? [];
   const optionsShape = pickField("beadedShape")?.options ?? [];
 
-  // ---------- read draft (guard Step1) ----------
+  // ---------- read draft (بدون ریدایرکت) ----------
   useEffect(() => {
     try {
       const raw = sessionStorage.getItem(DRAFT_KEY);
-      if (!raw) {
-        router.replace("/dashboard/products/add");
-        return;
-      }
+      if (!raw) return;
       const draft = JSON.parse(raw);
       if (draft.step2) setData(draft.step2);
       if (draft.step2?.beadedStones) setBeadedStones(draft.step2.beadedStones);
       if (draft.step2?.pendants) setPendants(draft.step2.pendants);
-    } catch {
-      router.replace("/dashboard/products/add");
-    }
-  }, [router]);
+    } catch {}
+  }, []);
 
   // ---------- visibility ----------
   const isVisible = (f: Step2Field) => {
-    // وقتی Beaded هستیم، این ۴ فیلد را با رندر اختصاصی نشان می‌دهیم
     if (data.strand === STRAND.BEADED && beadedFieldNames.has(f.name))
       return false;
-
     if (!f.showIf) return true;
     return Object.entries(f.showIf).every(([k, vals]) =>
-      vals.includes(data[k] || "")
+      vals.includes((data as any)[k] || "")
     );
   };
 
@@ -91,7 +81,7 @@ export default function Step2Page() {
     return {
       [STRAND.CHAIN]: [...commonLen, "chainType", "chainMetal"],
       [STRAND.LEATHER]: [...commonLen, "leatherColor"],
-      [STRAND.BEADED]: [...commonLen], // فیلدهای مروبط به مهره‌ها را جدا مدیریت می‌کنیم
+      [STRAND.BEADED]: [...commonLen],
       [STRAND.NONE]: ["stone", "stoneColor"],
     } as Record<string, string[]>;
   }, []);
@@ -99,7 +89,6 @@ export default function Step2Page() {
   const allStrandSpecificKeys = useMemo(() => {
     const s = new Set<string>();
     Object.values(strandSets).forEach((arr) => arr.forEach((k) => s.add(k)));
-    // بعلاوه ۴ فیلد سنگ برای حالت None (چون در Beaded اختصاصی رندر می‌شوند)
     ["stone", "stoneColor"].forEach((k) => s.add(k));
     return s;
   }, [strandSets]);
@@ -135,20 +124,15 @@ export default function Step2Page() {
     setData((prev) => {
       let next: Data = { ...prev, [name]: value };
 
-      // type تغییر کرد
       if (name === "type" && value !== "necklace") {
         next = { type: value };
-        // پاکسازی ردیف‌های مهره هم
         if (beadedStones.length) {
           setBeadedStones([]);
-          persist({ type: value }, []);
-        } else {
-          persist({ type: value }, []);
         }
+        persist({ type: value }, []);
         return next;
       }
 
-      // strand تغییر کرد
       if (name === "strand") {
         const keep = new Set<string>([
           "type",
@@ -159,7 +143,6 @@ export default function Step2Page() {
           if (!keep.has(key)) delete next[key];
         }
 
-        // ورود به Beaded → اگر لیست خالی است یک ردیف بساز
         if (value === STRAND.BEADED && beadedStones.length === 0) {
           const one: BeadedRow = {
             stone: "",
@@ -172,7 +155,6 @@ export default function Step2Page() {
           return next;
         }
 
-        // خروج از Beaded → لیست را پاک کن
         if (value !== STRAND.BEADED && beadedStones.length) {
           setBeadedStones([]);
           persist(next, []);
@@ -219,11 +201,7 @@ export default function Step2Page() {
   // ---------- validation ----------
   const baseRequiredOk = () =>
     allFields
-      .filter(
-        (f: Step2Field) =>
-          isVisible(f) && // این خودش Beaded fields را در حالت Beaded حذف می‌کند
-          f.requiredWhenVisible
-      )
+      .filter((f: Step2Field) => isVisible(f) && f.requiredWhenVisible)
       .every((f: Step2Field) => (data[f.name] || "").trim() !== "");
 
   const beadedOk =
@@ -235,32 +213,21 @@ export default function Step2Page() {
 
   const canNext = baseRequiredOk() && beadedOk;
 
-  // ---------- title ----------
-  const strandTitle = data.strand ? ` - ${data.strand}` : "";
-
   return (
-    <main className="max-w-6xl mx-auto p-6">
-      <h1 className="text-2xl font-semibold mb-6">
-        Add Product page{" "}
-        {/* <span className="font-normal">
-          {schema.baseTitle}
-          {strandTitle}
-        </span> */}
-      </h1>
+    <section className="mt-8 p-4 ">
+      <h2 className="text-lg font-semibold mb-4">Details</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {schema.groups.map((group, gi) => (
-          <section key={gi} className="space-y-6">
+          <div key={gi} className="space-y-6">
             {(group.fields as Step2Field[]).map((f: Step2Field) => {
               if (!isVisible(f)) return null;
               return (
                 <div key={f.name} className="flex items-center gap-4">
-                  {/* label */}
                   <label className="w-40 shrink-0 text-gray-800">
                     {f.label}
                   </label>
 
-                  {/* control */}
                   {f.type === "select" ? (
                     <select
                       value={data[f.name] || ""}
@@ -306,7 +273,6 @@ export default function Step2Page() {
                     key={idx}
                     className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end"
                   >
-                    {/* Stone */}
                     <div>
                       <label className="block mb-1 text-gray-800">Stone</label>
                       <select
@@ -325,7 +291,6 @@ export default function Step2Page() {
                       </select>
                     </div>
 
-                    {/* Stone color */}
                     <div>
                       <label className="block mb-1 text-gray-800">
                         Stone color
@@ -346,7 +311,6 @@ export default function Step2Page() {
                       </select>
                     </div>
 
-                    {/* Finish */}
                     <div>
                       <label className="block mb-1 text-gray-800">
                         Beaded Finish
@@ -367,7 +331,6 @@ export default function Step2Page() {
                       </select>
                     </div>
 
-                    {/* Shape + remove */}
                     <div className="flex gap-2">
                       <div className="flex-1">
                         <label className="block mb-1 text-gray-800">
@@ -410,9 +373,10 @@ export default function Step2Page() {
                 </button>
               </div>
             )}
+
             {pendants.length > 0 && (
               <div className="mt-10">
-                <h2 className="text-lg font-medium mb-3">Pendants</h2>
+                <h3 className="text-md font-medium mb-3">Pendants</h3>
                 <div className="overflow-x-auto border rounded">
                   <table className="min-w-full text-sm">
                     <thead className="bg-gray-50">
@@ -462,45 +426,36 @@ export default function Step2Page() {
                 </div>
               </div>
             )}
-            {/* دکمه‌ی add pendant همیشه */}
-            <div className="pt-2">
-              <button
-                type="button"
-                className="text-blue-600 hover:underline"
-                onClick={() => router.push("/dashboard/products/add/pendent")}
-              >
-                + add pendant
-              </button>
-            </div>
-          </section>
+
+            {/* دکمه‌ی add pendant فعلاً می‌ماند (اگر خواستی بعداً مودال/سکشن بسازیم) */}
+            {showPendant ? (
+              <section>
+                <AddPendantPage />
+              </section>
+            ) : (
+              <div className="pt-2">
+                <a
+                  className="text-blue-600 hover:underline"
+                  onClick={() => setShowPendant(true)}
+                >
+                  + add pendant
+                </a>
+              </div>
+            )}
+          </div>
         ))}
       </div>
 
-      <div className="mt-8 flex justify-between">
-        <button
-          type="button"
-          onClick={() => router.push("/dashboard/products/add")}
-          className="px-6 py-2 rounded border border-gray-300 hover:bg-gray-50"
-        >
-          Back
-        </button>
-
-        <button
-          type="button"
-          disabled={!canNext}
-          onClick={() => {
-            alert("Step 2 collected (UI only).");
-            // router.push("/dashboard/products/add/step-3")
-          }}
-          className={`px-6 py-2 rounded ${
-            canNext
-              ? "bg-blue-600 text-white hover:bg-blue-700"
-              : "bg-gray-300 text-gray-600 cursor-not-allowed"
-          }`}
-        >
-          Next
-        </button>
-      </div>
-    </main>
+      <style jsx>{`
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        input[type="number"] {
+          -moz-appearance: textfield;
+        }
+      `}</style>
+    </section>
   );
 }
