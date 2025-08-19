@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import Step2Section from "./StepTwo/page";
+import Step2Section from "./AddDetails";
 
 type Kind = "wearable" | "collectable";
 type ImageItem = { id: string; dataUrl: string; name: string; size: number };

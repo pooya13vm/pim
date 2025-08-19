@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import schemaJson from "@/app/schemas/form.json";
 import type { Step2Schema, Step2Field } from "@/app/schemas/types";
-import AddPendantPage from "../pendent/page";
+import AddPendantPage from "./AddPendent";
 
 type Data = Record<string, string>;
 type BeadedRow = {

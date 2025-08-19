@@ -108,7 +108,7 @@ export default function AddPendantPage() {
           <select
             value={metal}
             onChange={(e) => setMetal(e.target.value)}
-            className="w-full h-10 border rounded px-3 bg-white"
+            className="w-full h-10 border rounded px-3"
           >
             <option value=""></option>
             {metalOptions.map((m) => (
