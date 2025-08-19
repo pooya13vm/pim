@@ -34,7 +34,7 @@ export default function Step2Section({ onBack }: { onBack?: () => void }) {
   const [pendants, setPendants] = useState<Pendant[]>([]);
   const [data, setData] = useState<Data>({});
   const [beadedStones, setBeadedStones] = useState<BeadedRow[]>([]);
-  const [showPendant, setShowPendant] = useState<Boolean>(false);
+  const [showPendant, setShowPendant] = useState<boolean>(false);
 
   // ---------- helpers from schema ----------
   const allFields: Step2Field[] = schema.groups.flatMap(
