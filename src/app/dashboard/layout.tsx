@@ -18,8 +18,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       icon: <FileEdit size={18} />, // یا هر آیکونی که مناسب هست
     },
     {
-      name: "Settings",
-      href: "/dashboard/settings",
+      name: "Setting",
+      href: "/dashboard/setting",
       icon: <Settings size={18} />,
     },
   ];

@@ -40,7 +40,7 @@ export default function EditProductPage() {
 
   return (
     <Suspense fallback={<div className="p-6">Loading form...</div>}>
-      <DynamicFormContent mode="edit" product={product} />
+      {/* <DynamicFormContent mode="edit" product={product} /> */}
     </Suspense>
   );
 }

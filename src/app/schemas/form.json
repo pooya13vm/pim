@@ -1,0 +1,132 @@
+{
+  "baseTitle": "Product",
+  "groups": [
+    {
+      "fields": [
+        {
+          "name": "type",
+          "label": "Type",
+          "type": "select",
+          "requiredWhenVisible": true,
+          "options": [
+            "necklace",
+            "bracelet",
+            "anklet",
+            "earrings",
+            "bolo tie",
+            "Ring",
+            "set"
+          ]
+        },
+
+        {
+          "name": "strand",
+          "label": "Strand",
+          "type": "select",
+          "requiredWhenVisible": true,
+          "options": ["Chain", "Leather cord", "Beaded", "None"],
+          "showIf": { "type": ["necklace"] }
+        },
+
+        {
+          "name": "strandLength",
+          "label": "Strand length",
+          "type": "number",
+          "suffix": "Inches",
+          "showIf": { "strand": ["Chain", "Leather cord", "Beaded"] }
+        },
+
+        {
+          "name": "strandWidth",
+          "label": "Strand Width",
+          "type": "number",
+          "suffix": "mm",
+          "showIf": { "strand": ["Chain", "Leather cord", "Beaded"] }
+        },
+
+        {
+          "name": "chainType",
+          "label": "Chain Type",
+          "type": "select",
+          "options": [
+            "cable",
+            "rope",
+            "omega",
+            "flat snake",
+            "cuban",
+            "figaro",
+            "bar",
+            "bead",
+            "herringbone",
+            "curb",
+            "box",
+            "popcorn",
+            "wheat",
+            "Paper clip"
+          ],
+          "showIf": { "strand": ["Chain"] }
+        },
+
+        {
+          "name": "chainMetal",
+          "label": "Chain Metal",
+          "type": "select",
+          "options": [
+            "Sterling silver",
+            "Gold plated",
+            "14 Carat Gold",
+            "18 Carat Gold",
+            "22 Carat Gold",
+            "14 Carat Gold Sterling silver",
+            "18 Carat Gold Sterling silver",
+            "22 Carat Gold Sterling silver",
+            "Sterling silver plated rhodium",
+            "Copper",
+            "Brass"
+          ],
+          "showIf": { "strand": ["Chain"] }
+        },
+
+        {
+          "name": "leatherColor",
+          "label": "Leather color",
+          "type": "select",
+          "options": ["Black", "Light Brown", "Dark Brown"],
+          "showIf": { "strand": ["Leather cord"] }
+        },
+
+        {
+          "name": "stone",
+          "label": "Stone",
+          "type": "select",
+          "options": ["Navajo pearl", "Turquoise", "Coral", "Onyx", "Agate"],
+          "showIf": { "strand": ["Beaded", "None"] }
+        },
+
+        {
+          "name": "stoneColor",
+          "label": "Stone color",
+          "type": "select",
+          "options": ["All colors", "Silver", "Black", "Blue", "Green", "Red"],
+          "showIf": { "strand": ["Beaded", "None"] }
+        },
+
+        {
+          "name": "beadedFinish",
+          "label": "Beaded Finish",
+          "type": "select",
+          "options": ["Smooth", "Rough", "Faceted"],
+          "showIf": { "strand": ["Beaded"] }
+        },
+
+        {
+          "name": "beadedShape",
+          "label": "Beaded Shape",
+          "type": "select",
+          "options": ["Round", "Natural", "Chip"],
+          "showIf": { "strand": ["Beaded"] }
+        }
+      ]
+    }
+  ]
+}
