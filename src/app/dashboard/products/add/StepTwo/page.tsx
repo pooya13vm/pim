@@ -67,11 +67,13 @@ export default function Step2Section({ onBack }: { onBack?: () => void }) {
 
   // ---------- visibility ----------
   const isVisible = (f: Step2Field) => {
+    // وقتی Beaded هستیم، این ۴ فیلد را با رندر اختصاصی نشان می‌دهیم
     if (data.strand === STRAND.BEADED && beadedFieldNames.has(f.name))
       return false;
+
     if (!f.showIf) return true;
     return Object.entries(f.showIf).every(([k, vals]) =>
-      vals.includes((data as any)[k] || "")
+      vals.includes(data[k] || "")
     );
   };
 
